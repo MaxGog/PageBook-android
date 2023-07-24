@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PageRu.App">
+
+    <Application.Resources>
+        <Style x:Key="Shell" TargetType="Element">
+            <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light=#0078D6, Dark=#222222}" />
+            <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Light=#FFFFFF, Dark=#FFFFFF}"/>
+            <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light=#FFFFFF, Dark=#FFFFFF}"/>
+            <Setter Property="Shell.DisabledColor" Value="{AppThemeBinding Light=Gray, Dark=#8d8d8d}" />
+            <Setter Property="Shell.UnselectedColor" Value="{AppThemeBinding Light=Gray, Dark=#8d8d8d}" />
+            <Setter Property="Shell.TabBarBackgroundColor" Value="{AppThemeBinding Light=#f2f2f2, Dark=#000000}" />
+            <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Light=Gray, Dark=LightGray}"/>
+            <Setter Property="Shell.TabBarTitleColor" Value="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"/>
+        </Style>
+    </Application.Resources>
+    
+</Application>

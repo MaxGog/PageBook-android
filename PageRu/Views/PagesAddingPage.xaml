@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:pageru="clr-namespace:PageRu.Models" 
+             x:DataType="pageru:Page"
+             Title="{Binding NamePage}"
+             x:Class="PageRu.Views.PagesAddingPage"
+             BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#000000}">
+    <ContentPage.Content>
+        <StackLayout Margin="20">
+            <Label Text="Название:"/>
+            <Editor Placeholder="Название заметки..." Text="{Binding NamePage}"/>
+            <Editor Text="{Binding Content}" HeightRequest="200"/>
+            <Grid ColumnDefinitions="*,*">
+                <Button Text="Сохранить" Clicked="Save_Clicked"/>
+                <Button Text="Удалить" Grid.Column="1" Clicked="Delete_Clicked"/>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

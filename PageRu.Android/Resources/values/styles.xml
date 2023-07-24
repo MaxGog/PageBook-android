@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+
+  <style name="MainTheme" parent="MainTheme.Base">
+	  <item name="android:statusBarColor">@android:color/transparent</item>
+	  <item name="colorAccent">#0078D6</item>
+	  <item name="android:colorAccent">#0078D6</item>
+  </style>
+</resources>
