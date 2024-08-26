@@ -4,6 +4,7 @@
              x:Class="PageRu.App">
 
     <Application.Resources>
+        <Color x:Key="MainColor">#2a52be</Color>
         <Style x:Key="Shell" TargetType="Element">
             <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light=#0078D6, Dark=#222222}" />
             <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Light=#FFFFFF, Dark=#FFFFFF}"/>
@@ -14,6 +15,22 @@
             <Setter Property="Shell.TabBarUnselectedColor" Value="{AppThemeBinding Light=Gray, Dark=LightGray}"/>
             <Setter Property="Shell.TabBarTitleColor" Value="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"/>
         </Style>
+
+        <Style x:Key="BaseCardStyle" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="{AppThemeBinding Light=White, Dark=#222222}"/>
+            <Setter Property="HasShadow" Value="False"/>
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+
+        <Style x:Key="BaseButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{StaticResource MainColor}" />
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Margin" Value="10, 0"/>
+        </Style>
+
     </Application.Resources>
     
 </Application>

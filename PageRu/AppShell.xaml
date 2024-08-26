@@ -12,6 +12,6 @@
 
     <TabBar>
         <ShellContent Title="Заметки" Icon="align_text_center_96px.png" Route="NotesPage" ContentTemplate="{DataTemplate views:NotesPage}"/>
-        <ShellContent Title="О приложении" Icon="info_96px.png" ContentTemplate="{DataTemplate views:AboutPage}"/>
+        <!--<ShellContent Title="О приложении" Icon="info_96px.png" ContentTemplate="{DataTemplate views:AboutPage}"/>-->
     </TabBar>
 </Shell>

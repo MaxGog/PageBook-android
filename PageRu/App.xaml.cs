@@ -3,6 +3,7 @@ using System.IO;
 using Xamarin.Forms;
 
 using PageRu.Data;
+using PageRu.Views;
 
 namespace PageRu
 {

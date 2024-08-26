@@ -9,13 +9,13 @@
   <Identity
     Name="52304FeatherProjects.Page.ru"
     Publisher="CN=B9003DCF-59B1-401C-9896-9F045D0A6C6D"
-    Version="1.0.2.0" />
+    Version="1.2.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="c4e1bf14-60ea-4cfb-8a95-699737ec579a" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Page.ru</DisplayName>
-    <PublisherDisplayName>Feather Projects Studio (R)</PublisherDisplayName>
+    <PublisherDisplayName>MaxGog</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -32,12 +32,12 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="PageRu.UWP.App">
       <uap:VisualElements
-        DisplayName="Page"
+        DisplayName="Заметки Page.RU"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="PageRu.UWP"
         BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png" ShortName="Page">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png" ShortName="Заметки">
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
             <uap:ShowOn Tile="wide310x150Logo" />

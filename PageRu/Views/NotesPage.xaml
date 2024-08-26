@@ -5,7 +5,7 @@
              Title="Заметки"
              x:Class="PageRu.Views.NotesPage"
              x:DataType="PageRuModels:Page"
-             BackgroundColor="{AppThemeBinding Light=#FFFFFF, Dark=#000000}">
+             BackgroundColor="{AppThemeBinding Light=#f2f2f2, Dark=#000000}">
     
     <ContentPage.ToolbarItems>
         <ToolbarItem IconImageSource="add_file_96px.png" Text="Добавить заметку" Clicked="AddPage_Clicked"/>
@@ -17,10 +17,12 @@
         </CollectionView.ItemsLayout>
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <StackLayout>
-                    <Label Text="{Binding NamePage}" FontSize="Large" TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"/>
-                    <Label Text="{Binding Content}" FontSize="Medium" TextColor="Silver"/>
-                </StackLayout>
+                <Frame Style="{StaticResource BaseCardStyle}">
+                    <StackLayout Spacing="10" Padding="10">
+                        <Label Text="{Binding NamePage}" FontSize="Large" TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"/>
+                        <Label Text="{Binding Content}" MaxLines="2" FontSize="Medium" TextColor="{AppThemeBinding Light=Gray, Dark=LightGray}"/>
+                    </StackLayout>
+                </Frame>
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>
