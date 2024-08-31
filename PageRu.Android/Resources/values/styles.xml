@@ -6,4 +6,7 @@
 	  <item name="colorAccent">#0078D6</item>
 	  <item name="android:colorAccent">#0078D6</item>
   </style>
+	<style name="WidgetBackground">
+		<item name="android:background">@android:color/transparent</item>
+	</style>
 </resources>

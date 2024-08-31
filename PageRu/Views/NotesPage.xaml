@@ -18,8 +18,9 @@
         <CollectionView.ItemTemplate>
             <DataTemplate>
                 <Frame Style="{StaticResource BaseCardStyle}">
-                    <StackLayout Spacing="10" Padding="10">
+                    <StackLayout Padding="10">
                         <Label Text="{Binding NamePage}" FontSize="Large" TextColor="{AppThemeBinding Light=#000000, Dark=#FFFFFF}"/>
+                        <Label Text="{Binding Date, StringFormat='{0:dd MMMM yyyy}'}" FontSize="Small" TextColor="DarkGray"/>
                         <Label Text="{Binding Content}" MaxLines="2" FontSize="Medium" TextColor="{AppThemeBinding Light=Gray, Dark=LightGray}"/>
                     </StackLayout>
                 </Frame>

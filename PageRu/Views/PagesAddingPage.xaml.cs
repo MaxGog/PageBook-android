@@ -35,6 +35,7 @@ namespace PageRu.Views
         private async void Save_Clicked(object sender, EventArgs e)
         {
             Models.Page page = (Models.Page)BindingContext;
+            page.Date = DateTime.Now;
             if (!string.IsNullOrWhiteSpace(page.Content) || !string.IsNullOrWhiteSpace(page.NamePage))
             {
                 await App.PageDB.SavePageAsync(page);
