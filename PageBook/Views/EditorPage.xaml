@@ -1,0 +1,31 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:PageBook.ViewModels"
+             x:DataType="vm:EditorViewModel"
+             x:Class="PageBook.Views.EditorPage">
+
+    <ContentPage.BindingContext>
+        <vm:EditorViewModel />
+    </ContentPage.BindingContext>
+    
+    <StackLayout Padding="20">
+        <Grid ColumnSpacing="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Text="B" Command="{Binding FormatTextCommand}" CommandParameter="bold"/>
+            <Button Grid.Column="1" Text="I" Command="{Binding FormatTextCommand}" CommandParameter="italic"/>
+            <Button Grid.Column="2" Text="U" Command="{Binding FormatTextCommand}" CommandParameter="underline"/>
+            <Button Grid.Column="3" Text="✓" Command="{Binding SaveNoteCommand}" BackgroundColor="Green" TextColor="White"/>
+        </Grid>
+        <Editor x:Name="noteEditor"
+                Text="{Binding Content}"
+                HeightRequest="300"
+                Grid.Column="0"
+                Grid.ColumnSpan="5"/>
+    </StackLayout>
+</ContentPage>
