@@ -3,12 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:PageBook.ViewModels"
              x:Class="PageBook.Views.MainPage"
-             x:DataType="vm:MainViewModel"
              Title="Заметки">
-
-    <ContentPage.BindingContext>
-        <vm:MainViewModel />
-    </ContentPage.BindingContext>
     
     <StackLayout Padding="20">
         
@@ -26,32 +21,35 @@
                 BackgroundColor="{DynamicResource Primary}"
                 TextColor="White"
                 CornerRadius="20"/>
-        
-        <CollectionView Grid.Row="1"
-                        ItemsSource="{Binding Notes}"
-                        
-                        SelectionMode="Single">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Margin="0,0,0,10"
-                           Padding="15"
-                           BackgroundColor="White"
-                           HasShadow="True"
-                           CornerRadius="10">
-                        <StackLayout>
-                            <Label Text="{Binding Title}"
-                                   FontAttributes="Bold"
-                                   FontSize="Medium"/>
-                            <Label Text="{Binding Content}"
-                                   MaxLines="2"
-                                   LineBreakMode="TailTruncation"/>
-                            <Label Text="{Binding CreatedAt, StringFormat='Создано: {0:dd.MM.yyyy HH:mm}'}"
-                                   FontAttributes="Italic"
-                                   VerticalOptions="End"/>
-                        </StackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+        <ScrollView>
+            <StackLayout>
+                <ListView ItemsSource="{Binding Notes}"
+                    HasUnevenRows="True"
+                    ItemSelected="OnNoteSelected">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame Margin="0,0,0,10"
+                                    Padding="15"
+                                    HasShadow="True"
+                                    CornerRadius="10">
+                                    <StackLayout>
+                                        <Label Text="{Binding Title}"
+                                            FontAttributes="Bold"
+                                            FontSize="Medium"/>
+                                        <Label Text="{Binding Content}"
+                                            MaxLines="2"
+                                            LineBreakMode="TailTruncation"/>
+                                        <Label Text="{Binding CreatedAt, StringFormat='Создано: {0:dd.MM.yyyy HH:mm}'}"
+                                            FontAttributes="Italic"
+                                            VerticalOptions="End"/>
+                                    </StackLayout>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+        </ScrollView>
     </StackLayout>
 </ContentPage>

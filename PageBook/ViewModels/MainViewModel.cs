@@ -21,11 +21,8 @@ public class MainViewModel : INotifyPropertyChanged
         noteStorageService = new NoteStorageService();
         LoadNotesCommand = new Command(async () => await LoadNotesAsync());
         AddNoteCommand = new Command(async () => await AddNoteAsync());
+        EditNoteCommand = new Command<Note>(async (note) => await EditNoteAsync(note));
         LoadNotesCommand.Execute(null);
-    }
-    public MainViewModel()
-    {
-        
     }
 
     public ObservableCollection<Note> Notes
@@ -36,6 +33,7 @@ public class MainViewModel : INotifyPropertyChanged
 
     public ICommand LoadNotesCommand { get; }
     public ICommand AddNoteCommand { get; }
+    public ICommand EditNoteCommand { get; }
 
     private async Task LoadNotesAsync()
     {
@@ -55,7 +53,27 @@ public class MainViewModel : INotifyPropertyChanged
 
     private async Task AddNoteAsync()
     {
+        if (navigation == null)
+        {
+            await Application.Current.MainPage.DisplayAlert("Ошибка", "Навигация не инициализирована!", "OK");
+            return;
+        }
+    
         await navigation.PushAsync(new EditorPage());
+    }
+
+    public async Task EditNoteAsync(Note note)
+    {
+        if (navigation == null)
+        {
+            await Application.Current.MainPage.DisplayAlert(
+                "Ошибка",
+                "Навигация не инициализирована!",
+                "OK");
+            return;
+        }
+        
+        await navigation.PushAsync(new EditorPage(note));
     }
 
     protected void SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)

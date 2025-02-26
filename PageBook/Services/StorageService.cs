@@ -27,7 +27,7 @@ public class NoteStorageService : IAsyncDisposable
     {
         try
         {
-            await InitializeConnection();
+            InitializeConnection();
             var notes = await connection.Table<Note>()
                 .OrderBy(n => n.CreatedAt)
                 .ToListAsync();
@@ -43,7 +43,7 @@ public class NoteStorageService : IAsyncDisposable
     {
         try
         {
-            await InitializeConnection();
+            InitializeConnection();
             return await connection.Table<Note>()
                 .Where(n => n.Id == id)
                 .FirstOrDefaultAsync();
@@ -58,8 +58,7 @@ public class NoteStorageService : IAsyncDisposable
     {
         try
         {
-            await InitializeConnection();
-            
+            InitializeConnection();
             if (string.IsNullOrEmpty(note.Id))
             {
                 note.Id = Guid.NewGuid().ToString();
@@ -80,7 +79,7 @@ public class NoteStorageService : IAsyncDisposable
     {
         try
         {
-            await InitializeConnection();
+            InitializeConnection();
             await connection.DeleteAsync<Note>(id);
         }
         catch (SQLiteException ex)
@@ -93,7 +92,7 @@ public class NoteStorageService : IAsyncDisposable
     {
         try
         {
-            await InitializeConnection();
+            InitializeConnection();
             await connection.UpdateAsync(note);
         }
         catch (SQLiteException ex)
@@ -102,7 +101,7 @@ public class NoteStorageService : IAsyncDisposable
         }
     }
 
-    private async Task InitializeConnection()
+    private void InitializeConnection()
     {
         if (connection == null)
         {

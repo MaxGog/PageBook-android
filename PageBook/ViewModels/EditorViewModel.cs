@@ -1,5 +1,6 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
@@ -12,20 +13,19 @@ public class EditorViewModel : INotifyPropertyChanged
 {
     private readonly INavigation navigation;
     private readonly NoteStorageService noteStorageService;
-    private string content;
     private readonly FormattingService formattingService;
-
-    public EditorViewModel(INavigation navigation)
+    private readonly Editor editor;
+    private string content;
+    public string id;
+    
+    public EditorViewModel(INavigation navigation, Editor editor)
     {
         this.navigation = navigation;
+        this.editor = editor;
         noteStorageService = new NoteStorageService();
-        formattingService = new FormattingService();
+        formattingService = new FormattingService(editor);
         FormatTextCommand = new Command<string>(ApplyFormatting);
         SaveNoteCommand = new Command(async () => await SaveNoteAsync());
-    }
-    public EditorViewModel()
-    {
-        
     }
 
     public string Content
@@ -39,11 +39,13 @@ public class EditorViewModel : INotifyPropertyChanged
 
     private void ApplyFormatting(string formatType)
     {
-        var editor = Application.Current.MainPage.FindByName<Editor>("noteEditor");
-        if (editor == null || editor.SelectionLength == 0)
+        if (!formattingService.CanApplyFormatting())
             return;
-
-        var selectedText = editor.Text;
+            
+        var selectedText = editor.Text.Substring(
+            editor.CursorPosition - editor.SelectionLength,
+            editor.SelectionLength);
+            
         formattingService.ApplyFormatting(selectedText, formatType);
     }
 
@@ -53,19 +55,22 @@ public class EditorViewModel : INotifyPropertyChanged
         {
             var note = new Note
             {
-                Title = Content.Split('\n').FirstOrDefault() ?? "Без названия",
+                Title = !string.IsNullOrWhiteSpace(Content) ? 
+                    Content.Split('\n').FirstOrDefault() ?? "Без названия" : "Без названия",
                 Content = Content,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                Id = id
             };
-
+            
             await noteStorageService.SaveNoteAsync(note);
+            MessagingCenter.Send(this, "NoteSaved");
             await navigation.PopAsync();
         }
         catch (Exception ex)
         {
             await Application.Current.MainPage.DisplayAlert(
-                "Ошибка", 
-                $"Не удалось сохранить заметку: {ex.Message}", 
+                "Ошибка",
+                $"Не удалось сохранить заметку: {ex.Message}",
                 "OK");
         }
     }

@@ -1,12 +1,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:PageBook.ViewModels"
-             x:DataType="vm:EditorViewModel"
              x:Class="PageBook.Views.EditorPage">
-
-    <ContentPage.BindingContext>
-        <vm:EditorViewModel />
-    </ContentPage.BindingContext>
     
     <StackLayout Padding="20">
         <Grid ColumnSpacing="5">

@@ -1,7 +1,10 @@
+using SQLite;
+
 namespace PageBook.Models;
 
 public class Note
 {
+    [PrimaryKey]
     public string Id { get; set; }
     public string Title { get; set; }
     public string Content { get; set; }
