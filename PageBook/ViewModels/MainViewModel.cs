@@ -22,6 +22,9 @@ public class MainViewModel : INotifyPropertyChanged
         LoadNotesCommand = new Command(async () => await LoadNotesAsync());
         AddNoteCommand = new Command(async () => await AddNoteAsync());
         EditNoteCommand = new Command<Note>(async (note) => await EditNoteAsync(note));
+
+        sortNameCommand = new Command(() => SortedByName());
+        sortDateCommand = new Command(() => SortedByDate());
         LoadNotesCommand.Execute(null);
     }
 
@@ -35,7 +38,10 @@ public class MainViewModel : INotifyPropertyChanged
     public ICommand AddNoteCommand { get; }
     public ICommand EditNoteCommand { get; }
 
-    private async Task LoadNotesAsync()
+    public ICommand sortNameCommand { get; private set; }
+    public ICommand sortDateCommand { get; private set; }
+
+    public async Task LoadNotesAsync()
     {
         try
         {
@@ -83,4 +89,15 @@ public class MainViewModel : INotifyPropertyChanged
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
+
+    private void SortedByName()
+    {
+        var sortedBooks = Notes.OrderBy(x => x.Title).ToList();
+        Notes = new ObservableCollection<Note>(sortedBooks);
+    }
+    private void SortedByDate()
+    {
+        var sortedBooks = Notes.OrderBy(x => x.CreatedAt).ToList();
+        Notes = new ObservableCollection<Note>(sortedBooks);
+    }
 }

@@ -10,14 +10,19 @@ public partial class MainPage : ContentPage
         InitializeComponent();
         BindingContext = new MainViewModel(Navigation);
     }
-    private async void OnNoteSelected(object sender, SelectionChangedEventArgs e)
+
+    protected override async void OnAppearing()
     {
-        if (e.CurrentSelection != null)
+        base.OnAppearing();
+        await ((MainViewModel)BindingContext).LoadNotesAsync();
+    }
+    private async void OnNoteSelected(object sender, SelectedItemChangedEventArgs e)
+    {
+        if (e.SelectedItem != null)
         {
-            var note = (Note)e.CurrentSelection.FirstOrDefault();
-            if (note != null)
+            if (e.SelectedItem as Note != null)
             {
-                await ((MainViewModel)BindingContext).EditNoteAsync(note);
+                await ((MainViewModel)BindingContext).EditNoteAsync((Note)e.SelectedItem);
                 ((ListView)sender).SelectedItem = null;
             }
         }

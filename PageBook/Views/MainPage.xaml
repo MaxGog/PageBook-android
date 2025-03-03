@@ -3,53 +3,50 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:PageBook.ViewModels"
              x:Class="PageBook.Views.MainPage"
-             Title="Заметки">
+             Title="Мои заметки">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Добавить новую заметку" Command="{Binding AddNoteCommand}"/>
+    </ContentPage.ToolbarItems>
     
     <StackLayout Padding="20">
-        
-        <Label
-               Text="Мои заметки"
-               FontSize="Title"
-               FontAttributes="Bold"/>
-        
-        <Button Grid.Column="1"
-                Text="+"
-                Command="{Binding AddNoteCommand}"
-                HorizontalOptions="End"
-                WidthRequest="60"
-                HeightRequest="40"
-                BackgroundColor="{DynamicResource Primary}"
-                TextColor="White"
-                CornerRadius="20"/>
-        <ScrollView>
-            <StackLayout>
-                <ListView ItemsSource="{Binding Notes}"
-                    HasUnevenRows="True"
-                    ItemSelected="OnNoteSelected">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Frame Margin="0,0,0,10"
-                                    Padding="15"
-                                    HasShadow="True"
-                                    CornerRadius="10">
-                                    <StackLayout>
-                                        <Label Text="{Binding Title}"
-                                            FontAttributes="Bold"
-                                            FontSize="Medium"/>
-                                        <Label Text="{Binding Content}"
-                                            MaxLines="2"
-                                            LineBreakMode="TailTruncation"/>
-                                        <Label Text="{Binding CreatedAt, StringFormat='Создано: {0:dd.MM.yyyy HH:mm}'}"
-                                            FontAttributes="Italic"
-                                            VerticalOptions="End"/>
-                                    </StackLayout>
-                                </Frame>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+        <ScrollView Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" Spacing="10" Margin="10">
+                <Button x:Name="Name" Text="по названию" Command="{Binding sortNameCommand}" Style="{StaticResource TagButtonStyle}"/>
+                <Button x:Name="Date" Text="по дате" Command="{Binding sortDateCommand}" Style="{StaticResource TagButtonStyle}"/>
             </StackLayout>
+        </ScrollView>
+        <ScrollView>
+            <ListView ItemsSource="{Binding Notes}"
+                HasUnevenRows="True"
+                SelectionMode="Single"
+                ItemSelected="OnNoteSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Padding="20" HasShadow="False" CornerRadius="10" BorderColor="Transparent"
+                                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}">
+                                <StackLayout>
+                                    <Label Text="{Binding Title}"
+                                        FontAttributes="Bold"
+                                        FontFamily="Empty"
+                                        FontSize="Medium"/>
+                                    <StackLayout Orientation="Horizontal" Spacing="10">
+                                        <Label Text="{Binding CreatedAt, StringFormat='{0:dd.MM.yyyy}'}"
+                                            FontAttributes="Italic"
+                                            VerticalOptions="End"
+                                            TextColor="LightGray"/>
+                                        <Label Text="{Binding Content}"
+                                            MaxLines="1"
+                                            LineBreakMode="MiddleTruncation"
+                                            TextColor="Gray"/>
+                                    </StackLayout>    
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </ScrollView>
     </StackLayout>
 </ContentPage>

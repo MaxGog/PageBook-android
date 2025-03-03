@@ -6,6 +6,7 @@ using System.Windows.Input;
 
 using PageBook.Models;
 using PageBook.Services;
+using PageBook.Views;
 
 namespace PageBook.ViewModels;
 
@@ -26,6 +27,7 @@ public class EditorViewModel : INotifyPropertyChanged
         formattingService = new FormattingService(editor);
         FormatTextCommand = new Command<string>(ApplyFormatting);
         SaveNoteCommand = new Command(async () => await SaveNoteAsync());
+        RemoveNoteCommand = new Command(async () => await RemoveNoteAsync());
     }
 
     public string Content
@@ -36,6 +38,7 @@ public class EditorViewModel : INotifyPropertyChanged
 
     public ICommand FormatTextCommand { get; }
     public ICommand SaveNoteCommand { get; }
+    public ICommand RemoveNoteCommand { get; }
 
     private void ApplyFormatting(string formatType)
     {
@@ -63,7 +66,7 @@ public class EditorViewModel : INotifyPropertyChanged
             };
             
             await noteStorageService.SaveNoteAsync(note);
-            MessagingCenter.Send(this, "NoteSaved");
+            //MessagingCenter.Send(this, "NoteSaved");
             await navigation.PopAsync();
         }
         catch (Exception ex)
@@ -71,6 +74,31 @@ public class EditorViewModel : INotifyPropertyChanged
             await Application.Current.MainPage.DisplayAlert(
                 "Ошибка",
                 $"Не удалось сохранить заметку: {ex.Message}",
+                "OK");
+        }
+    }
+
+    private async Task RemoveNoteAsync()
+    {
+        try
+        {
+            var note = new Note
+            {
+                Title = !string.IsNullOrWhiteSpace(Content) ? 
+                    Content.Split('\n').FirstOrDefault() ?? "Без названия" : "Без названия",
+                Content = Content,
+                CreatedAt = DateTime.Now,
+                Id = id
+            };
+            
+            await noteStorageService.DeleteNoteAsync(note.Id);
+            await navigation.PopAsync();
+        }
+        catch (Exception ex)
+        {
+            await Application.Current.MainPage.DisplayAlert(
+                "Ошибка",
+                $"Не удалось удалить заметку: {ex.Message}",
                 "OK");
         }
     }
