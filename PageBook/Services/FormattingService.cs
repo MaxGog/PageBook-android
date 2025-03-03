@@ -39,7 +39,6 @@ public class FormattingService
         catch (ArgumentOutOfRangeException ex)
         {
             Debug.WriteLine($"Ошибка при форматировании: {ex.Message}");
-            // Исправляем позицию курсора
             editor.CursorPosition = Math.Max(0, Math.Min(editor.CursorPosition, editor.Text.Length));
         }
     }
@@ -58,7 +57,6 @@ public class FormattingService
             var selectionStart = editor.CursorPosition;
             var selectionLength = editor.SelectionLength;
             
-            // Проверяем границы
             selectionStart = Math.Max(0, Math.Min(selectionStart, currentText.Length));
             selectionLength = Math.Min(selectionLength, currentText.Length - selectionStart);
             

@@ -25,8 +25,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Frame Padding="20" HasShadow="False" CornerRadius="10" BorderColor="Transparent"
-                                BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}">
+                            <Border Padding="20" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}">
                                 <StackLayout>
                                     <Label Text="{Binding Title}"
                                         FontAttributes="Bold"
@@ -43,7 +42,7 @@
                                             TextColor="Gray"/>
                                     </StackLayout>    
                                 </StackLayout>
-                            </Frame>
+                            </Border>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

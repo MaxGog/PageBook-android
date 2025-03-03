@@ -50,10 +50,7 @@ public class MainViewModel : INotifyPropertyChanged
         }
         catch (Exception ex)
         {
-            await Application.Current.MainPage.DisplayAlert(
-                "Ошибка", 
-                $"Не удалось загрузить заметки: {ex.Message}", 
-                "OK");
+            await Application.Current.MainPage.DisplayAlert("Ошибка", $"Не удалось загрузить заметки: {ex.Message}", "OK");
         }
     }
 
@@ -72,10 +69,7 @@ public class MainViewModel : INotifyPropertyChanged
     {
         if (navigation == null)
         {
-            await Application.Current.MainPage.DisplayAlert(
-                "Ошибка",
-                "Навигация не инициализирована!",
-                "OK");
+            await Application.Current.MainPage.DisplayAlert("Ошибка", "Навигация не инициализирована!", "OK");
             return;
         }
         

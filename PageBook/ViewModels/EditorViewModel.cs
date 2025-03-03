@@ -68,10 +68,7 @@ public class EditorViewModel : INotifyPropertyChanged
         }
         catch (Exception ex)
         {
-            await Application.Current.MainPage.DisplayAlert(
-                "Ошибка",
-                $"Не удалось сохранить заметку: {ex.Message}",
-                "OK");
+            await Application.Current.MainPage.DisplayAlert("Ошибка", $"Не удалось сохранить заметку: {ex.Message}", "OK");
         }
     }
 
@@ -93,10 +90,7 @@ public class EditorViewModel : INotifyPropertyChanged
         }
         catch (Exception ex)
         {
-            await Application.Current.MainPage.DisplayAlert(
-                "Ошибка",
-                $"Не удалось удалить заметку: {ex.Message}",
-                "OK");
+            await Application.Current.MainPage.DisplayAlert("Ошибка", $"Не удалось удалить заметку: {ex.Message}", "OK");
         }
     }
 

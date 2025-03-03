@@ -2,7 +2,7 @@ using SQLite;
 
 namespace PageBook.Models;
 
-public class ToDoModel
+public class ToDo
 {
     [PrimaryKey]
     public string Id { get; set; }
