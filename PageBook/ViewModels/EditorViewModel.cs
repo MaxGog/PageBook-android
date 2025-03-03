@@ -1,12 +1,9 @@
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
 using PageBook.Models;
 using PageBook.Services;
-using PageBook.Views;
 
 namespace PageBook.ViewModels;
 

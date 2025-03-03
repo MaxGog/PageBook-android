@@ -10,6 +10,7 @@
     </ContentPage.ToolbarItems>
     
     <StackLayout Padding="20">
+        <SearchBar Placeholder="Поиск" TextChanged="SearchBarTextChanged"/>
         <ScrollView Orientation="Horizontal">
             <StackLayout Orientation="Horizontal" Spacing="10" Margin="10">
                 <Button x:Name="Name" Text="по названию" Command="{Binding sortNameCommand}" Style="{StaticResource TagButtonStyle}"/>

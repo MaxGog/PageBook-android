@@ -27,5 +27,9 @@ public partial class MainPage : ContentPage
             }
         }
     }
+
+    private void SearchBarTextChanged(object sender, TextChangedEventArgs e)
+    {
+    }
 }
 
