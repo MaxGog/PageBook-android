@@ -19,17 +19,26 @@ PageBook/
 ├── App.xaml.cs
 ├── AppShell.xaml
 ├── AppShell.xaml.cs
+├── ServiceRegistration.cs
 ├── Models/
 │   └── NoteModel.cs
+│   └── ToDoModel.cs
 ├── Services/
 │   ├── FormattingService.cs
-│   └── StorageService.cs
+│   ├── ToDoStorageService.cs
+│   └── NoteStorageService.cs
 ├── ViewModels/
 │   ├── EditorViewModel.cs
+│   ├── ToDoListViewModel.cs
+│   ├── ToDoEditorViewModel.cs
 │   └── MainViewModel.cs
 └── Views/
     ├── EditorPage.xaml
     ├── EditorPage.xaml.cs
+    ├── ToDoEditorPage.xaml
+    ├── ToDoEditorPage.xaml.cs
+    ├── ToDoListPage.xaml
+    ├── ToDoListPage.xaml.cs
     ├── MainPage.xaml
     └── MainPage.xaml.cs
 ```
