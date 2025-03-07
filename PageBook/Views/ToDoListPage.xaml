@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PageBook.Views.ToDoListPage"
+             Title="Задачи">
+    
+    <StackLayout Padding="20">
+        <Label Text="Мои задачи"
+               FontSize="Title"
+               HorizontalOptions="Center"/>
+        
+        <Grid ColumnSpacing="10" RowSpacing="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Button Grid.Column="0"
+                    Text="Сортировать по имени"
+                    Command="{Binding sortNameCommand}"
+                    BackgroundColor="#2196F3"
+                    TextColor="White"
+                    CornerRadius="8"/>
+            
+            <Button Grid.Column="1"
+                    Text="Сортировать по дате"
+                    Command="{Binding sortDateCommand}"
+                    BackgroundColor="#2196F3"
+                    TextColor="White"
+                    CornerRadius="8"/>
+        </Grid>
+        
+        <CollectionView Grid.Row="1"
+                       ItemsSource="{Binding Items}"
+                       SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="10"
+                          Padding="10"
+                          BorderColor="#E0E0E0"
+                          CornerRadius="8"
+                          HasShadow="True">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            
+                            <Label Grid.Row="0"
+                                   Text="{Binding Title}"
+                                   FontAttributes="Bold"/>
+                            
+                            <Label Grid.Row="1"
+                                   Text="{Binding CreatedAt, StringFormat='Дата: {0:dd.MM.yyyy HH:mm}'}"
+                                   FontAttributes="Italic"
+                                   TextColor="#666"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        
+        <Button Text="+ Добавить задачу"
+                Command="{Binding AddToDoItemCommand}"
+                BackgroundColor="#4CAF50"
+                TextColor="White"
+                CornerRadius="8"
+                HorizontalOptions="Center"
+                VerticalOptions="End"
+                Margin="0,20,0,0"/>
+    </StackLayout>
+
+</ContentPage>

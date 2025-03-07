@@ -17,16 +17,10 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			});
-
-		builder.Services.AddSingleton<MainPage>();
-		builder.Services.AddSingleton<EditorPage>();
-		builder.Services.AddSingleton<MainViewModel>();
-		builder.Services.AddSingleton<EditorViewModel>();
-		builder.Services.AddSingleton<NoteStorageService>();
-		builder.Services.AddSingleton<FormattingService>();
-		builder.Services.AddSingleton<INavigation>(sp => sp.GetRequiredService<INavigation>());
-		builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
+			})
+			.ConfigureViewModels()
+    		.ConfigureViews()
+			.ConfigureServices();
 
 #if DEBUG
 		builder.Logging.AddDebug();

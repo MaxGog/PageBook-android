@@ -21,7 +21,7 @@ public class ToDoListViewModel : INotifyPropertyChanged
         todoStorageService = new ToDoStorageService();
         LoadToDoItemsCommand = new Command(async () => await LoadToDoItemsAsync());
         AddToDoItemCommand = new Command(async () => await AddToDoItemAsync());
-        EditToDoItemCommand = new Command<Note>(async (note) => await EditToDoItemAsync(item));
+        EditToDoItemCommand = new Command<ToDo>(async (item) => await EditToDoItemAsync(item));
 
         sortNameCommand = new Command(() => SortedByName());
         sortDateCommand = new Command(() => SortedByDate());
@@ -61,8 +61,9 @@ public class ToDoListViewModel : INotifyPropertyChanged
             await Application.Current.MainPage.DisplayAlert("Ошибка", "Навигация не инициализирована!", "OK");
             return;
         }
-    
-        //await navigation.PushAsync(new ToDoEditorPage());
+
+        var editorViewModel = new ToDoEditorViewModel(navigation);
+        await navigation.PushAsync(new ToDoEditorPage(editorViewModel));
     }
 
     public async Task EditToDoItemAsync(ToDo item)
@@ -72,8 +73,9 @@ public class ToDoListViewModel : INotifyPropertyChanged
             await Application.Current.MainPage.DisplayAlert("Ошибка", "Навигация не инициализирована!", "OK");
             return;
         }
-        
-        //await navigation.PushAsync(new ToDoEditorPage(item));
+
+        var editorViewModel = new ToDoEditorViewModel(navigation, item);
+        await navigation.PushAsync(new ToDoEditorPage(editorViewModel));
     }
 
     protected void SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)

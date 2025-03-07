@@ -7,9 +7,7 @@
     Shell.FlyoutBehavior="Flyout"
     Title="PageBook">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:MainPage}"
-        Route="MainPage" />
+    <ShellContent Title="Заметки" ContentTemplate="{DataTemplate views:MainPage}" Route="MainPage" />
+    <ShellContent Title="To Do лист" ContentTemplate="{DataTemplate views:ToDoListPage}" Route="ToDoListPage"/>
 
 </Shell>
