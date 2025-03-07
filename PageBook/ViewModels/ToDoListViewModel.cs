@@ -14,6 +14,13 @@ public class ToDoListViewModel : INotifyPropertyChanged
     private readonly INavigation navigation;
     private readonly ToDoStorageService todoStorageService;
     private ObservableCollection<ToDo> items;
+    private bool _isLoading;
+    public bool IsLoading
+    {
+        get => _isLoading;
+        set => SetProperty(ref _isLoading, value);
+    }
+    private bool isInitialized;
 
     public ToDoListViewModel(INavigation navigation)
     {
@@ -22,10 +29,31 @@ public class ToDoListViewModel : INotifyPropertyChanged
         LoadToDoItemsCommand = new Command(async () => await LoadToDoItemsAsync());
         AddToDoItemCommand = new Command(async () => await AddToDoItemAsync());
         EditToDoItemCommand = new Command<ToDo>(async (item) => await EditToDoItemAsync(item));
-
         sortNameCommand = new Command(() => SortedByName());
         sortDateCommand = new Command(() => SortedByDate());
-        LoadToDoItemsCommand.Execute(null);
+        
+        _ = LoadToDoItemsAsync();
+    }
+
+    private async Task LoadToDoItemsAsync()
+    {
+        try
+        {
+            IsLoading = true;
+            var loadedItems = await todoStorageService.GetAllToDoItemsAsync();
+            Items = new ObservableCollection<ToDo>(loadedItems);
+        }
+        catch (Exception ex)
+        {
+            await Application.Current.MainPage.DisplayAlert(
+                "Ошибка", 
+                $"Не удалось загрузить заметки: {ex.Message}", 
+                "OK");
+        }
+        finally
+        {
+            IsLoading = false;
+        }
     }
 
     public ObservableCollection<ToDo> Items
@@ -40,19 +68,6 @@ public class ToDoListViewModel : INotifyPropertyChanged
 
     public ICommand sortNameCommand { get; private set; }
     public ICommand sortDateCommand { get; private set; }
-
-    public async Task LoadToDoItemsAsync()
-    {
-        try
-        {
-            var loadedItems = await todoStorageService.GetAllToDoItemsAsync();
-            Items = new ObservableCollection<ToDo>(loadedItems);
-        }
-        catch (Exception ex)
-        {
-            await Application.Current.MainPage.DisplayAlert("Ошибка", $"Не удалось загрузить заметки: {ex.Message}", "OK");
-        }
-    }
 
     private async Task AddToDoItemAsync()
     {
