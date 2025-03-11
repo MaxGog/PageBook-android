@@ -8,41 +8,35 @@
         <ToolbarItem Text="Добавить новую задачу" Command="{Binding AddToDoItemCommand}"/>
     </ContentPage.ToolbarItems>
     
-    <StackLayout Padding="20">
-        <ActivityIndicator IsRunning="{Binding IsLoading}"
-                          IsVisible="{Binding IsLoading}"
-                          HorizontalOptions="Center"
-                          VerticalOptions="Center"/>
-        
-        <CollectionView Grid.Row="1"
-                       ItemsSource="{Binding Items}"
-                       SelectionMode="Single"
-                       EmptyView="Нет задач">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Margin="10"
-                          Padding="10"
-                          BorderColor="#E0E0E0"
-                          CornerRadius="8"
-                          HasShadow="True">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
-                            
-                            <Label Grid.Row="0"
-                                   Text="{Binding Title}"
-                                   FontAttributes="Bold"/>
-                            
-                            <Label Grid.Row="1"
-                                   Text="{Binding CreatedAt, StringFormat='Дата: {0:dd.MM.yyyy HH:mm}'}"
-                                   FontAttributes="Italic"
-                                   TextColor="#666"/>
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </StackLayout>
+    <ScrollView>
+        <StackLayout Padding="20">
+            <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Items}"
+                        SelectionMode="Single"
+                        EmptyView="Нет задач"
+                        SelectionChanged="ToDoSelectionChanged">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="20" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                
+                                <Label Grid.Row="0"
+                                    Text="{Binding Title}"
+                                    FontAttributes="Bold"/>
+                                
+                                <Label Grid.Row="1"
+                                    Text="{Binding CreatedAt, StringFormat='Дата: {0:dd.MM.yyyy HH:mm}'}"
+                                    FontAttributes="Italic"
+                                    TextColor="#666"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

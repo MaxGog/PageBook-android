@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using PageBook.Models;
 using PageBook.ViewModels;
 
 namespace PageBook.Views;
@@ -11,16 +12,14 @@ public partial class ToDoListPage : ContentPage
     {
         InitializeComponent();
         BindingContext = _viewModel = new ToDoListViewModel(Navigation);
-        
-        // Добавляем отслеживание загрузки
-         _viewModel.PropertyChanged += (sender, e) => ViewModel_PropertyChanged(sender, e);
     }
 
-    private void ViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+    private async void ToDoSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(ToDoListViewModel.IsLoading))
+        if ((ToDo)e.CurrentSelection != null)
         {
-            //IsLoading = _viewModel.IsLoading;
+            await ((ToDoListViewModel)BindingContext).EditToDoItemAsync((ToDo)e.CurrentSelection);
+            ((CollectionView)sender).SelectedItem = null;
         }
     }
 }

@@ -14,12 +14,6 @@ public class ToDoListViewModel : INotifyPropertyChanged
     private readonly INavigation navigation;
     private readonly ToDoStorageService todoStorageService;
     private ObservableCollection<ToDo> items;
-    private bool _isLoading;
-    public bool IsLoading
-    {
-        get => _isLoading;
-        set => SetProperty(ref _isLoading, value);
-    }
     private bool isInitialized;
 
     public ToDoListViewModel(INavigation navigation)
@@ -39,7 +33,6 @@ public class ToDoListViewModel : INotifyPropertyChanged
     {
         try
         {
-            IsLoading = true;
             var loadedItems = await todoStorageService.GetAllToDoItemsAsync();
             Items = new ObservableCollection<ToDo>(loadedItems);
         }
@@ -49,10 +42,6 @@ public class ToDoListViewModel : INotifyPropertyChanged
                 "Ошибка", 
                 $"Не удалось загрузить заметки: {ex.Message}", 
                 "OK");
-        }
-        finally
-        {
-            IsLoading = false;
         }
     }
 
@@ -76,9 +65,7 @@ public class ToDoListViewModel : INotifyPropertyChanged
             await Application.Current.MainPage.DisplayAlert("Ошибка", "Навигация не инициализирована!", "OK");
             return;
         }
-
-        var editorViewModel = new ToDoEditorViewModel(navigation);
-        await navigation.PushAsync(new ToDoEditorPage(editorViewModel));
+        await navigation.PushAsync(new ToDoEditorPage());
     }
 
     public async Task EditToDoItemAsync(ToDo item)
@@ -88,9 +75,7 @@ public class ToDoListViewModel : INotifyPropertyChanged
             await Application.Current.MainPage.DisplayAlert("Ошибка", "Навигация не инициализирована!", "OK");
             return;
         }
-
-        var editorViewModel = new ToDoEditorViewModel(navigation, item);
-        await navigation.PushAsync(new ToDoEditorPage(editorViewModel));
+        await navigation.PushAsync(new ToDoEditorPage(item));
     }
 
     protected void SetProperty<T>(ref T field, T newValue, [CallerMemberName] string propertyName = null)
