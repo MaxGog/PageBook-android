@@ -37,6 +37,9 @@ android {
     buildFeatures {
         compose = true
     }
+    viewBinding {
+        enable = true
+    }
 }
 
 dependencies {
@@ -51,6 +54,9 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.room.common)
     implementation(libs.androidx.room.ktx)
+    implementation("androidx.room:room-runtime:2.5.2")
+    ksp("androidx.room:room-compiler:2.5.2")
+    implementation("androidx.room:room-ktx")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

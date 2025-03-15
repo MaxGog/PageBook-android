@@ -9,7 +9,6 @@ import ru.maxgog.pagebook.models.NoteModel
 
 @Database(entities = [NoteModel::class], version = 1, exportSchema = false)
 abstract class NoteDatabase : RoomDatabase() {
-
     abstract fun noteDao(): NoteDao
 
     companion object {
@@ -22,8 +21,7 @@ abstract class NoteDatabase : RoomDatabase() {
                     context.applicationContext,
                     NoteDatabase::class.java,
                     "note_database"
-                ).fallbackToDestructiveMigration()
-                    .build()
+                ).build()
                 INSTANCE = instance
                 instance
             }
