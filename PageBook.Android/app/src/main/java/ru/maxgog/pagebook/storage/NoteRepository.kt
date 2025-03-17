@@ -12,7 +12,7 @@ class NoteRepository(private val noteDao: NoteDao) {
     val noteList: LiveData<List<NoteModel>> = noteDao.getNotes()
     var note: NoteModel
         get() { return note }
-        set(editNote: NoteModel) { note = editNote}
+        set(editNote: NoteModel) { note = editNote }
 
     fun getNote(id:Int) {
         coroutineScope.launch(Dispatchers.IO) {
