@@ -1,36 +1,20 @@
 package ru.maxgog.pagebook
 
 import android.os.Bundle
-import androidx.activity.viewModels
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-
-import ru.maxgog.pagebook.adapters.NoteAdapter
-import ru.maxgog.pagebook.databinding.ActivityMainBinding
-import ru.maxgog.pagebook.models.NoteModel
-import ru.maxgog.pagebook.viewmodels.NoteViewModel
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
-
-    private val noteViewModel: NoteViewModel by viewModels()
-    private lateinit var adapter: NoteAdapter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        adapter = NoteAdapter()
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-
-        noteViewModel.allNotes.observe(this, { notes ->
-            notes?.let { adapter.setNotes(it) }
-        })
-
-        binding.fab.setOnClickListener {
-            val note = NoteModel(title = "New Note", content = "Note content")
-            noteViewModel.insert(note)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_main)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
     }
 }
