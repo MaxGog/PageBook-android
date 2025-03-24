@@ -1,34 +1,16 @@
 package ru.maxgog.pagebook.storage
 
 import androidx.lifecycle.LiveData
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import ru.maxgog.pagebook.models.NoteModel
 
 class NoteRepository(private val noteDao: NoteDao) {
-    private val coroutineScope = CoroutineScope(Dispatchers.Main)
+    val allNotes: LiveData<List<NoteModel>> = noteDao.getNotes()
 
-    val noteList: LiveData<List<NoteModel>> = noteDao.getNotes()
-    var note: NoteModel
-        get() { return note }
-        set(editNote: NoteModel) { note = editNote }
+    suspend fun getNote(id: Int): NoteModel? = noteDao.getNote(id)
 
-    fun getNote(id:Int) {
-        coroutineScope.launch(Dispatchers.IO) {
-            note = noteDao.getNote(id)
-        }
-    }
+    suspend fun addNote(note: NoteModel) = noteDao.addNewNote(note)
 
-    fun addNote(note: NoteModel) {
-        coroutineScope.launch(Dispatchers.IO) {
-            noteDao.addNewNote(note)
-        }
-    }
+    suspend fun updateNote(note: NoteModel) = noteDao.updateNote(note)
 
-    fun deleteNote(id:Int) {
-        coroutineScope.launch(Dispatchers.IO) {
-            noteDao.deleteNote(id)
-        }
-    }
+    suspend fun deleteNote(note: NoteModel) = noteDao.deleteNote(note)
 }

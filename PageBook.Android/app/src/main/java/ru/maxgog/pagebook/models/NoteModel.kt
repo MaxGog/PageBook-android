@@ -13,5 +13,6 @@ data class NoteModel(
     @ColumnInfo(name = "NoteId") val id: Int = 0,
     @ColumnInfo(name = "Title") val title: String = "",
     @ColumnInfo(name = "Content") val content: String = "",
+    @ColumnInfo(name = "Color") val color: Int = 0xFFBB86FC.toInt(),
     @ColumnInfo(name = "AtCreated") val atCreated: LocalDate?
-    )
+)
