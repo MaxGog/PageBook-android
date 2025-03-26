@@ -15,7 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import ru.maxgog.pagebook.models.NoteModel
-import ru.maxgog.pagebook.viewmodels.NotesViewModel
+import ru.maxgog.pagebook.storage.NotesViewModel
 import java.time.LocalDate
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -30,8 +30,8 @@ fun AddNoteScreen(viewModel: NotesViewModel, onBack: () -> Unit) {
         Button(onClick = {
             viewModel.insert(NoteModel(
                 title = title,
-                content = content,
-                atCreated = LocalDate.now()
+                content = content
+                //atCreated = LocalDate.now()
             ))
             onBack()
         }) {

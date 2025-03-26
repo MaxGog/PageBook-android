@@ -10,7 +10,7 @@ import ru.maxgog.pagebook.models.NoteModel
 
 @Dao
 interface NoteDao {
-    @Query("SELECT * FROM notes ORDER BY atCreated DESC")
+    @Query("SELECT * FROM notes")
     fun getAll(): Flow<List<NoteModel>>
 
     @Insert

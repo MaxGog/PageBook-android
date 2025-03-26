@@ -1,9 +1,11 @@
 package ru.maxgog.pagebook
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 //noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.*
@@ -12,13 +14,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import ru.maxgog.pagebook.storage.NotesRepository
 import ru.maxgog.pagebook.ui.NotesApp
-import ru.maxgog.pagebook.viewmodels.NotesViewModel
+import ru.maxgog.pagebook.storage.NotesViewModel
 
 class MainActivity : ComponentActivity() {
     private val viewModel: NotesViewModel by viewModels {
         NotesViewModelFactory((application as NotesApplication).repository)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

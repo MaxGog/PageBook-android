@@ -2,7 +2,7 @@ package ru.maxgog.pagebook.ui
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import ru.maxgog.pagebook.viewmodels.NotesViewModel
+import ru.maxgog.pagebook.storage.NotesViewModel
 
 import androidx.compose.runtime.*
 import androidx.navigation.compose.NavHost

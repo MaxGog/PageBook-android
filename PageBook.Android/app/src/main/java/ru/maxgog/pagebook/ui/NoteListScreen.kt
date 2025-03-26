@@ -16,7 +16,8 @@ fun NoteListScreen(
     onAddNote: () -> Unit
 ) {
     LazyColumn {
-        items(notes) { note ->
+        items(notes.size) { index ->
+            val note = notes[index]
             NoteItem(note = note, onClick = { onNoteClick(note.id) })
         }
     }

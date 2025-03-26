@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import ru.maxgog.pagebook.models.NoteModel
-import ru.maxgog.pagebook.viewmodels.NotesViewModel
+import ru.maxgog.pagebook.storage.NotesViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -96,7 +96,7 @@ fun NoteDetailScreen(
                         text = editableNote!!.title,
                         style = MaterialTheme.typography.headlineMedium,
                         modifier = Modifier.fillMaxWidth(),
-                        color = Color(editableNote!!.color)
+                        //color = Color(editableNote!!.color)
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
@@ -112,12 +112,12 @@ fun NoteDetailScreen(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    Text(
+                    /*Text(
                         text = "Created: ${editableNote!!.atCreated}",
                         style = MaterialTheme.typography.labelSmall,
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.End
-                    )
+                    )*/
                 }
             }
         }

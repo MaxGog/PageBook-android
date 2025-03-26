@@ -27,9 +27,9 @@ fun NoteItem(
             .padding(8.dp)
             .clickable(onClick = onClick),
         shape = RoundedCornerShape(12.dp),
-        colors = CardDefaults.cardColors(
+        /*colors = CardDefaults.cardColors(
             containerColor = Color(note.color).copy(alpha = 0.2f)
-        ),
+        ),*/
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Column(
@@ -47,7 +47,7 @@ fun NoteItem(
                     style = MaterialTheme.typography.titleMedium.copy(
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
-                        color = Color(note.color)
+                        //color = Color(note.color)
                     ),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
@@ -66,12 +66,12 @@ fun NoteItem(
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Text(
+            /*Text(
                 text = note.atCreated?.toString() ?: "No date",
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
                 modifier = Modifier.align(Alignment.End)
-            )
+            )*/
         }
     }
 }

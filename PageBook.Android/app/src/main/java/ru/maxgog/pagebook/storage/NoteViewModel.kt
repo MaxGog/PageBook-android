@@ -1,10 +1,9 @@
-package ru.maxgog.pagebook.viewmodels
+package ru.maxgog.pagebook.storage
 
 import androidx.lifecycle.ViewModel
 import ru.maxgog.pagebook.models.NoteModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import ru.maxgog.pagebook.storage.NotesRepository
 
 class NotesViewModel(private val repository: NotesRepository) : ViewModel() {
     val allNotes = repository.allNotes
