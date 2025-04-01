@@ -15,8 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import ru.maxgog.pagebook.models.NoteModel
-import ru.maxgog.pagebook.storage.NotesViewModel
-import java.time.LocalDate
+import ru.maxgog.pagebook.viewmodels.NotesViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

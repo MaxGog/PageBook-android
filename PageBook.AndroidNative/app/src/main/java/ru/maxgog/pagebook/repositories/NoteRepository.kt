@@ -1,6 +1,7 @@
-package ru.maxgog.pagebook.storage
+package ru.maxgog.pagebook.repositories
 
 import kotlinx.coroutines.flow.Flow
+import ru.maxgog.pagebook.dao.NoteDao
 import ru.maxgog.pagebook.models.NoteModel
 
 class NotesRepository(private val noteDao: NoteDao) {

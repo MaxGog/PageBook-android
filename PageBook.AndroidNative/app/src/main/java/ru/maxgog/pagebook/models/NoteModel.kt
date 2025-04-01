@@ -4,7 +4,6 @@ import androidx.annotation.NonNull
 import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
 import androidx.room.Entity
-import java.time.LocalDate
 
 @Entity(tableName = "notes")
 data class NoteModel(
