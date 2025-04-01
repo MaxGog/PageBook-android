@@ -52,12 +52,14 @@ PageBook/
 └── AndroidNative/         # Нативная Android реализация  
     ├── app/  
     │   ├── src/main/  
-    │   │   ├── java/com/pagebook/  
-    │   │   │   ├── convecters/       # DI модули  
+    │   │   ├── java/com/pagebook/
+    │   │   │   ├── dao/  
     │   │   │   ├── models/  
-    │   │   │   ├── storage/  
-    │   │   │   ├── ui/       # Активности и фрагменты  
-    │   │   └── res/          # Ресурсы  
+    │   │   │   ├── repositories/
+    │   │   │   ├── rooms/  
+    │   │   │   ├── ui/
+    │   │   │   ├── viewmodels/    
+    │   │   └── res/          
     │   └── build.gradle  
     └── settings.gradle  
 ```
