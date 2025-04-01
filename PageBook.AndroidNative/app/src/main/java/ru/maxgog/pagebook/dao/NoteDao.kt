@@ -1,4 +1,4 @@
-package ru.maxgog.pagebook.storage
+package ru.maxgog.pagebook.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
