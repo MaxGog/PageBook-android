@@ -16,6 +16,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -105,8 +106,8 @@ fun BottomNavBar(
 
     NavigationBar {
         NavigationBarItem(
-            icon = { Icon(Icons.Default.Checklist, "Todo") },
-            label = { Text("Todo") },
+            icon = { Icon(Icons.Default.Checklist, stringResource(R.string.todo)) },
+            label = { Text(stringResource(R.string.todo_list)) },
             selected = currentRoute == "todo",
             onClick = {
                 navController.navigate("todo") {
@@ -119,8 +120,8 @@ fun BottomNavBar(
             }
         )
         NavigationBarItem(
-            icon = { Icon(Icons.Default.Note, "Notes") },
-            label = { Text("Notes") },
+            icon = { Icon(Icons.Default.Note, stringResource(R.string.notes)) },
+            label = { Text(stringResource(R.string.notes)) },
             selected = currentRoute?.startsWith("notes") == true,
             onClick = {
                 navController.navigate("notes") {

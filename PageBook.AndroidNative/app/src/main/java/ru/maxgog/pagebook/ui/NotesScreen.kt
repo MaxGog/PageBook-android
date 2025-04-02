@@ -18,9 +18,11 @@ import ru.maxgog.pagebook.viewmodels.NotesViewModel
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ru.maxgog.pagebook.R
 import ru.maxgog.pagebook.models.NoteModel
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -68,7 +70,7 @@ fun NoteListScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Notes") },
+                title = { Text(stringResource(R.string.notes)) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary
@@ -77,7 +79,7 @@ fun NoteListScreen(
         },
         floatingActionButton = {
             FloatingActionButton(onClick = onAddNote) {
-                Icon(Icons.Default.Add, contentDescription = "Add Note")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add))
             }
         }
     ) { padding ->

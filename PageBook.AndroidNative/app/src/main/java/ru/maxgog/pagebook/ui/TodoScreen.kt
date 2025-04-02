@@ -22,7 +22,9 @@ import androidx.compose.material3.TopAppBarDefaults
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import ru.maxgog.pagebook.R
 import ru.maxgog.pagebook.models.TodoModel
 
 import ru.maxgog.pagebook.viewmodels.TodoViewModel
@@ -38,7 +40,7 @@ fun TodoScreen(viewModel: TodoViewModel) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("To-Do List") },
+                title = { Text(stringResource(R.string.todo_list)) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary
@@ -47,11 +49,10 @@ fun TodoScreen(viewModel: TodoViewModel) {
         },
         floatingActionButton = {
             FloatingActionButton(onClick = { showDialog = true }) {
-                Icon(Icons.Default.Add, contentDescription = "Add Todo")
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add))
             }
         }
     ) { padding ->
-        // Остальной код остается таким же
         LazyColumn(modifier = Modifier.padding(padding)) {
             items(todos.size) { index ->
                 TodoItem(
@@ -71,20 +72,20 @@ fun TodoScreen(viewModel: TodoViewModel) {
     if (showDialog) {
         AlertDialog(
             onDismissRequest = { showDialog = false },
-            title = { Text("Add New Task") },
+            title = { Text(stringResource(R.string.add)) },
             text = {
                 Column {
                     TextField(
                         value = newTodoTitle,
                         onValueChange = { newTodoTitle = it },
-                        label = { Text("Title") },
+                        label = { Text(stringResource(R.string.title)) },
                         modifier = Modifier.fillMaxWidth()
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     TextField(
                         value = newTodoDescription,
                         onValueChange = { newTodoDescription = it },
-                        label = { Text("Description") },
+                        label = { Text(stringResource(R.string.description)) },
                         modifier = Modifier.fillMaxWidth()
                     )
                 }
@@ -105,14 +106,14 @@ fun TodoScreen(viewModel: TodoViewModel) {
                         }
                     }
                 ) {
-                    Text("Add")
+                    Text(stringResource(R.string.add))
                 }
             },
             dismissButton = {
                 Button(
                     onClick = { showDialog = false }
                 ) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         )

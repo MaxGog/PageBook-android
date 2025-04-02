@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">PageBook</string>
+    <string name="new_note">New note</string>
+    <string name="edit_note">Edit note</string>
+    <string name="new_task">Add new task</string>
+    <string name="cancel">Cancel</string>
+    <string name="ok">OK</string>
+    <string name="add">Add</string>
+    <string name="delete">Delete</string>
+    <string name="back">Back</string>
+    <string name="content">Content</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="notes">Notes</string>
+    <string name="todo_list">To-Do list</string>
+    <string name="save">Save</string>
+    <string name="todo">To do</string>
 </resources>
