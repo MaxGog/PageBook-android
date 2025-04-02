@@ -6,7 +6,6 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import ru.maxgog.pagebook.models.NoteModel
 import ru.maxgog.pagebook.viewmodels.NotesViewModel
@@ -64,7 +63,7 @@ fun NoteEditScreen(
         ) {
             OutlinedTextField(
                 value = editableNote.title,
-                onValueChange = { editableNote = editableNote.copy(title = editableNote.title) },
+                onValueChange = { editableNote = editableNote.copy(title = it) },
                 label = { Text("Title") },
                 modifier = Modifier.fillMaxWidth()
             )
@@ -73,7 +72,7 @@ fun NoteEditScreen(
 
             OutlinedTextField(
                 value = editableNote.content,
-                onValueChange = { editableNote = editableNote.copy(content = editableNote.content) },
+                onValueChange = { editableNote = editableNote.copy(content = it) },
                 label = { Text("Content") },
                 modifier = Modifier.fillMaxWidth().weight(1f)
                 //textAlign = TextAlign.Justify
