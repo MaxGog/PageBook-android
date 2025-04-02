@@ -23,32 +23,10 @@ PageBook - это кроссплатформенное приложение дл
 ```bash
 PageBook/  
 ├── MAUI/                  # .NET MAUI реализация  
-│   ├── App.xaml
-│   ├── App.xaml.cs
-│   ├── AppShell.xaml
-│   ├── AppShell.xaml.cs
-│   ├── ServiceRegistration.cs
 │   ├── Models/
-│   │   └── NoteModel.cs
-│   │   └── ToDoModel.cs
 │   ├── Services/
-│   │   ├── FormattingService.cs
-│   │   ├── ToDoStorageService.cs
-│   │   └── NoteStorageService.cs
 │   ├── ViewModels/
-│   │   ├── EditorViewModel.cs
-│   │   ├── ToDoListViewModel.cs
-│   │   ├── ToDoEditorViewModel.cs
-│   │   └── MainViewModel.cs
 │   └── Views/
-│       ├── EditorPage.xaml
-│       ├── EditorPage.xaml.cs
-│       ├── ToDoEditorPage.xaml
-│       ├── ToDoEditorPage.xaml.cs
-│       ├── ToDoListPage.xaml
-│       ├── ToDoListPage.xaml.cs
-│       ├── MainPage.xaml
-│       └── MainPage.xaml.cs
 └── AndroidNative/         # Нативная Android реализация  
     ├── app/  
     │   ├── src/main/  
