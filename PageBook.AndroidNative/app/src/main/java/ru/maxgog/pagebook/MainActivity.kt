@@ -24,8 +24,8 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import ru.maxgog.pagebook.ui.NotesApp
-import ru.maxgog.pagebook.ui.TodoApp
+import ru.maxgog.pagebook.ui.NotesScreen
+import ru.maxgog.pagebook.ui.TodoScreen
 import ru.maxgog.pagebook.ui.theme.PageBookTheme
 import ru.maxgog.pagebook.viewmodels.NotesViewModel
 import ru.maxgog.pagebook.viewmodels.NotesViewModelFactory
@@ -87,10 +87,10 @@ fun CombinedApp(
             modifier = Modifier.padding(padding)
         ) {
             composable("todo") {
-                TodoApp(todoViewModel)
+                TodoScreen(todoViewModel)
             }
             composable("notes") {
-                NotesApp(notesViewModel, navController)
+                NotesScreen(notesViewModel)
             }
         }
     }

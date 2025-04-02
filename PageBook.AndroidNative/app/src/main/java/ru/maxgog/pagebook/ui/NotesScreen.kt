@@ -7,11 +7,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
@@ -20,8 +18,6 @@ import ru.maxgog.pagebook.viewmodels.NotesViewModel
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -29,10 +25,7 @@ import ru.maxgog.pagebook.models.NoteModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun NotesApp(
-    viewModel: NotesViewModel,
-    parentNavController: NavHostController
-) {
+fun NotesScreen(viewModel: NotesViewModel) {
     val notes by viewModel.allNotes.collectAsState(initial = emptyList())
     val notesNavController = rememberNavController()
 
@@ -46,20 +39,21 @@ fun NotesApp(
                 notes = notes,
                 onNoteClick = { id -> notesNavController.navigate("detail/$id") },
                 onAddNote = { notesNavController.navigate("add") },
-                onBack = { parentNavController.popBackStack() }
             )
         }
         composable("add") {
-            AddNoteScreen(viewModel) {
-                parentNavController.popBackStack()
-            }
+            NoteEditScreen(
+                note = null,
+                viewModel = viewModel,
+                onBack = { notesNavController.popBackStack()} )
         }
         composable("detail/{id}") { backStackEntry ->
             val noteId = backStackEntry.arguments?.getString("id")?.toIntOrNull()
             val note = notes.firstOrNull { it.id == noteId }
-            NoteDetailScreen(note, viewModel) {
-                parentNavController.popBackStack()
-            }
+            NoteEditScreen(
+                note = note,
+                viewModel = viewModel,
+                onBack =  { notesNavController.popBackStack() } )
         }
     }
 }
@@ -70,7 +64,6 @@ fun NoteListScreen(
     notes: List<NoteModel>,
     onNoteClick: (Int) -> Unit,
     onAddNote: () -> Unit,
-    onBack: () -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -79,12 +72,7 @@ fun NoteListScreen(
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     titleContentColor = MaterialTheme.colorScheme.primary
-                ),
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
-                }
+                )
             )
         },
         floatingActionButton = {
