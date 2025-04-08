@@ -15,4 +15,6 @@
     <string name="todo_list">To-Do list</string>
     <string name="save">Save</string>
     <string name="todo">To do</string>
+    <string name="calendar">Calendar</string>
+
 </resources>
