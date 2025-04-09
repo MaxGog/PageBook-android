@@ -63,9 +63,7 @@ import java.util.Locale
 @OptIn(ExperimentalFoundationApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun CalendarScreen(
-    viewModel: CalendarViewModel
-) {
+fun CalendarScreen(viewModel: CalendarViewModel) {
     val currentMonth = remember { YearMonth.now() }
     val startMonth = remember { currentMonth.minusMonths(12) }
     val endMonth = remember { currentMonth.plusMonths(12) }

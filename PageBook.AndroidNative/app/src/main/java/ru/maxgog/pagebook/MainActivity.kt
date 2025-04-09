@@ -114,9 +114,7 @@ fun CombinedApp(
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun BottomNavBar(
-    navController: NavController
-) {
+fun BottomNavBar(navController: NavController) {
     val currentRoute = navController.currentBackStackEntry?.destination?.route
 
     NavigationBar {
