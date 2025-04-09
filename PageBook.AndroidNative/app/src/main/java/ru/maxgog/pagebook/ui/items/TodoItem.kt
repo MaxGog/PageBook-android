@@ -1,4 +1,4 @@
-package ru.maxgog.pagebook.ui
+package ru.maxgog.pagebook.ui.items
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
