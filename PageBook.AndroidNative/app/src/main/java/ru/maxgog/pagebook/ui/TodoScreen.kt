@@ -23,9 +23,12 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import ru.maxgog.pagebook.R
 import ru.maxgog.pagebook.models.TodoModel
+import ru.maxgog.pagebook.ui.items.TodoItem
+import ru.maxgog.pagebook.ui.theme.TodoListAppTheme
 
 import ru.maxgog.pagebook.viewmodels.TodoViewModel
 
@@ -116,6 +119,21 @@ fun TodoScreen(viewModel: TodoViewModel) {
                     Text(stringResource(R.string.cancel))
                 }
             }
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TodoPreview() {
+    TodoListAppTheme {
+        TodoItem(
+            todo = TodoModel(
+                title = stringResource(R.string.title),
+                description = stringResource(R.string.description)
+            ),
+            onTodoClick = {},
+            onDeleteClick = {}
         )
     }
 }
