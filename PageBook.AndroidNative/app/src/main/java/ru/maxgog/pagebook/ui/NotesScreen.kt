@@ -24,6 +24,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import ru.maxgog.pagebook.R
 import ru.maxgog.pagebook.models.NoteModel
+import ru.maxgog.pagebook.ui.items.NoteItem
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable

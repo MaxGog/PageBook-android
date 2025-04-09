@@ -3,8 +3,6 @@ package ru.maxgog.pagebook.models
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalDateTime
-import java.util.Date
 
 @Entity(tableName = "events")
 data class EventModel(

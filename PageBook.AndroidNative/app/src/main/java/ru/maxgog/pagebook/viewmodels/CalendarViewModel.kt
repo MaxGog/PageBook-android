@@ -1,6 +1,5 @@
 package ru.maxgog.pagebook.viewmodels
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -12,7 +11,6 @@ import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
 import ru.maxgog.pagebook.models.EventModel
 import ru.maxgog.pagebook.repositories.EventRepository
-import androidx.compose.runtime.State as ComposeState
 
 class CalendarViewModel(
     private val repository: EventRepository

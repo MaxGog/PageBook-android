@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 
     id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -44,41 +45,46 @@ android {
 
 dependencies {
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.activity.compose)
+
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-    implementation(libs.ui)
+
     implementation(libs.androidx.material)
-    implementation(libs.material3)
+    implementation(libs.androidx.material3)
     implementation(libs.androidx.material.icons.extended)
+
+    implementation(libs.material3)
     implementation(libs.androidx.foundation)
+
+    implementation(libs.ui)
     implementation(libs.ui.tooling.preview)
-    implementation(libs.androidx.activity.compose.v180)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.lifecycle.runtime.ktx.v262)
-    implementation(libs.androidx.lifecycle.livedata.ktx)
+
     implementation(libs.androidx.runtime.livedata)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material.icons.core)
-    implementation(libs.androidx.material.icons.extended.v160)
+
     implementation(libs.composecalendar)
     implementation(libs.kotlinx.datetime)
-    implementation(libs.coil.compose)
-    implementation(libs.jetbrains.kotlinx.datetime)
-    implementation(libs.play.services.location)
-    implementation(libs.retrofit)
-    implementation(libs.converter.moshi)
+    implementation(libs.kotlinx.coroutines.android)
 
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
 
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
+    implementation("com.google.dagger:hilt-android:2.48")
+    ksp("com.google.dagger:hilt-android-compiler:2.48")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+
+    implementation("com.kizitonwose.calendar:compose:2.4.0")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
+    implementation("com.jakewharton.threetenabp:threetenabp:1.4.6")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -90,11 +96,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    implementation(libs.androidx.material.icons.extended.v154)
-    implementation(libs.composecalendar.v113)
-    implementation(libs.kotlinx.datetime.v113)
-    implementation(libs.androidx.runtime.livedata.v154)
-    implementation(libs.kotlinx.coroutines.android)
-    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
 }
