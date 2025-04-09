@@ -5,12 +5,13 @@ import ru.maxgog.pagebook.rooms.NoteRoomDatabase
 import ru.maxgog.pagebook.repositories.NotesRepository
 import ru.maxgog.pagebook.rooms.TodoRoomDatabase
 import ru.maxgog.pagebook.repositories.TodoRepository
+import ru.maxgog.pagebook.rooms.EventRoomDatabase
+import ru.maxgog.pagebook.repositories.EventRepository
 
 class PageBookApplication : Application() {
     lateinit var notesRepository: NotesRepository
     lateinit var todoRepository: TodoRepository
-    lateinit var eventsRepository: EventsRepository
-    lateinit var weatherRepository: WeatherRepository
+    lateinit var eventsRepository: EventRepository
 
 
     override fun onCreate() {
@@ -23,8 +24,6 @@ class PageBookApplication : Application() {
         todoRepository = TodoRepository(todoDb.todoDao())
 
         val eventsDb = EventRoomDatabase.getDatabase(this)
-        eventsRepository = EventsRepository(eventsDb.eventDao())
-
-        weatherRepository = WeatherRepository(RetrofitClient.weatherApi)
+        eventsRepository = EventRepository(eventsDb.eventDao())
     }
 }

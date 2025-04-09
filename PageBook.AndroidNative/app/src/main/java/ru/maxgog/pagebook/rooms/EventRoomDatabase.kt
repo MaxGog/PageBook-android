@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import ru.maxgog.pagebook.Converters
 import ru.maxgog.pagebook.dao.EventDao
 import ru.maxgog.pagebook.models.EventModel
 
 @Database(entities = [EventModel::class], version = 1)
+@TypeConverters(Converters::class)
 abstract class EventRoomDatabase : RoomDatabase() {
     abstract fun eventDao(): EventDao
 

@@ -8,21 +8,16 @@ import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 import kotlinx.datetime.LocalDateTime
 import ru.maxgog.pagebook.models.EventModel
+import java.util.Date
 
 @Dao
 interface EventDao {
-    @Query("SELECT * FROM events ORDER BY dateTime ASC")
-    fun getAllEvents(): Flow<List<EventModel>>
-
-    @Query("SELECT * FROM events WHERE dateTime BETWEEN :start AND :end ORDER BY dateTime ASC")
-    fun getEventsBetween(start: LocalDateTime, end: LocalDateTime): Flow<List<EventModel>>
-
     @Insert
     suspend fun insert(event: EventModel)
 
-    @Update
-    suspend fun update(event: EventModel)
-
     @Delete
     suspend fun delete(event: EventModel)
+
+    @Query("SELECT * FROM events ORDER BY date ASC, time ASC")
+    suspend fun getAllEvents(): List<EventModel>
 }

@@ -26,6 +26,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import ru.maxgog.pagebook.ui.CalendarScreen
 import ru.maxgog.pagebook.ui.NotesScreen
 import ru.maxgog.pagebook.ui.TodoScreen
 import ru.maxgog.pagebook.ui.theme.PageBookTheme
@@ -45,10 +46,7 @@ class MainActivity : ComponentActivity() {
                 val app = application as PageBookApplication
                 val notesViewModelFactory = NotesViewModelFactory(app.notesRepository)
                 val todoViewModelFactory = TodoViewModelFactory(app.todoRepository)
-                val calendarViewModelFactory = CalendarViewModelFactory(
-                    app.eventsRepository,
-                    app.weatherRepository
-                )
+                val calendarViewModelFactory = CalendarViewModelFactory(app.eventsRepository)
                 CompositionLocalProvider(
                     LocalViewModelStoreOwner provides this
                 ) {

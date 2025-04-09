@@ -16,5 +16,9 @@
     <string name="save">Save</string>
     <string name="todo">To do</string>
     <string name="calendar">Calendar</string>
-
+    <string name="add_event">Create event</string>
+    <string name="event_title">Event name</string>
+    <string name="event_description">Description</string>
+    <string name="event_time">Time (HH:mm)</string>
+    <string name="no_events">Not found events</string>
 </resources>

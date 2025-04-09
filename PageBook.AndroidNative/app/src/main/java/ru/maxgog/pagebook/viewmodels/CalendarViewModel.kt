@@ -5,81 +5,75 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import io.github.boguszpawlowski.composecalendar.kotlinxDateTime.now
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
 import ru.maxgog.pagebook.models.EventModel
-import ru.maxgog.pagebook.models.WeatherData
-import ru.maxgog.pagebook.repositories.EventsRepository
-//import ru.maxgog.pagebook.repositories.WeatherRepository
+import ru.maxgog.pagebook.repositories.EventRepository
+import androidx.compose.runtime.State as ComposeState
 
 class CalendarViewModel(
-    private val eventsRepository: EventsRepository,
-    //private val weatherRepository: WeatherRepository
+    private val repository: EventRepository
 ) : ViewModel() {
-    private val _selectedDate = mutableStateOf(LocalDate.now())
-    val selectedDate: State<LocalDate> = _selectedDate
+    private val _selectedDate = MutableStateFlow(LocalDate.now())
+    val selectedDate: StateFlow<LocalDate> = _selectedDate.asStateFlow()
 
-    private val _events = mutableStateOf(emptyList<EventModel>())
-    val events: State<List<EventModel>> = _events
+    private val _events = MutableStateFlow<List<EventModel>>(emptyList())
+    val events: StateFlow<List<EventModel>> = _events.asStateFlow()
 
-    //private val _weather = mutableStateOf(emptyList<WeatherData>())
-    //val weather: State<List<WeatherData>> = _weather
+    private val _showDialog = MutableStateFlow(false)
+    val showDialog: StateFlow<Boolean> = _showDialog.asStateFlow()
 
-    private val _isLoading = mutableStateOf(false)
-    val isLoading: State<Boolean> = _isLoading
+    private val _dialogDate = MutableStateFlow(LocalDate.now())
+    val dialogDate: StateFlow<LocalDate> = _dialogDate.asStateFlow()
 
     init {
-        loadEventsForDate(_selectedDate.value)
-        loadWeatherForecast()
+        loadEvents()
     }
 
-    fun selectDate(date: LocalDate) {
+    fun onDateSelected(date: LocalDate) {
         _selectedDate.value = date
-        loadEventsForDate(date)
     }
 
-    private fun loadEventsForDate(date: LocalDate) {
-        viewModelScope.launch {
-            eventsRepository.getEventsForDate(date).collect { events ->
-                _events.value = events
-            }
-        }
+    fun showAddEventDialog(date: LocalDate) {
+        _dialogDate.value = date
+        _showDialog.value = true
     }
 
-    /*private fun loadWeatherForecast() {
-        _isLoading.value = true
-        viewModelScope.launch {
-            try {
-                _weather.value = weatherRepository.getWeatherForecast("Moscow")
-            } finally {
-                _isLoading.value = false
-            }
-        }
-    }*/
+    fun hideAddEventDialog() {
+        _showDialog.value = false
+    }
 
     fun addEvent(event: EventModel) {
         viewModelScope.launch {
-            eventsRepository.addEvent(event)
-            loadEventsForDate(event.dateTime.toLocalDate())
+            repository.insert(event)
+            loadEvents()
         }
     }
 
     fun deleteEvent(event: EventModel) {
         viewModelScope.launch {
-            eventsRepository.deleteEvent(event)
-            loadEventsForDate(event.dateTime.toLocalDate())
+            repository.delete(event)
+            loadEvents()
         }
     }
 
+    private fun loadEvents() {
+        viewModelScope.launch {
+            _events.value = repository.getAllEvents()
+        }
+    }
 }
 
 class CalendarViewModelFactory(
-    private val eventsRepository: EventsRepository,
-    //private val weatherRepository: WeatherRepository
+    private val eventsRepository: EventRepository,
+    //private val weatherRepository: WeatherRepository? = null
 ) : ViewModelProvider.Factory {
+    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CalendarViewModel::class.java)) {
-            @Suppress("UNCHECKED_CAST")
             return CalendarViewModel(eventsRepository, /*weatherRepository*/) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

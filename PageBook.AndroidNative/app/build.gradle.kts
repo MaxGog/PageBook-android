@@ -91,6 +91,10 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(libs.kalendar)
-    implementation(libs.kalendar.endlos)
+    implementation(libs.androidx.material.icons.extended.v154)
+    implementation(libs.composecalendar.v113)
+    implementation(libs.kotlinx.datetime.v113)
+    implementation(libs.androidx.runtime.livedata.v154)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
 }
