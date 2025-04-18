@@ -11,5 +11,6 @@ public partial class AppShell : Shell
 		Routing.RegisterRoute(nameof(EditorPage), typeof(EditorPage));
 		Routing.RegisterRoute(nameof(ToDoListPage), typeof(ToDoListPage));
         Routing.RegisterRoute($"{nameof(ToDoEditorPage)}?id={{itemId}}", typeof(ToDoEditorPage));
+		Routing.RegisterRoute(nameof(CalendarPage), typeof(CalendarPage));
 	}
 }

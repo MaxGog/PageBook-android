@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:viewmodels="clr-namespace:PageBook.ViewModels"
+             x:Class="PageBook.Views.CalendarPage"
+             Title="Календарь">
+    
+    <Grid RowDefinitions="Auto,*,Auto" Padding="10">
+        <DatePicker Grid.Row="0"
+                   Date="{Binding SelectedDate, Mode=TwoWay}"
+                   Format="D"
+                   HorizontalOptions="Center"
+                   DateSelected="DatePicker_DateSelected"/>
+        
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Events}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10">
+                        <Frame>
+                            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                                <Label Grid.Column="0" Grid.Row="0"
+                                       Text="{Binding Title}"
+                                       FontSize="Medium"
+                                       FontAttributes="Bold"/>
+                                
+                                <Label Grid.Column="0" Grid.Row="1"
+                                       Text="{Binding Description}"
+                                       FontSize="Small"/>
+                                
+                                <Button Grid.Column="1" Grid.Row="0" Grid.RowSpan="2"
+                                        Text="Delete"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CalendarViewModel}}, Path=DeleteEventCommand}"
+                                        CommandParameter="{Binding .}"
+                                        HorizontalOptions="End"
+                                        VerticalOptions="Center"/>
+                            </Grid>
+                        </Frame>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button Grid.Row="2"
+                Text="Добавить событие"
+                Command="{Binding AddEventCommand}"
+                HorizontalOptions="Center"/>
+    </Grid>
+</ContentPage>

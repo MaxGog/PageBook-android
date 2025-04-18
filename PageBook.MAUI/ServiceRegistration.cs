@@ -11,7 +11,8 @@ public static class ServiceRegistration
         mauiAppBuilder.Services.AddSingleton<ToDoListViewModel>();
         mauiAppBuilder.Services.AddSingleton<EditorViewModel>();
         mauiAppBuilder.Services.AddSingleton<NotesListViewModel>();
-        
+        mauiAppBuilder.Services.AddSingleton<CalendarViewModel>();
+
         return mauiAppBuilder;
     }
     public static MauiAppBuilder ConfigureServices(this MauiAppBuilder mauiAppBuilder)
@@ -21,6 +22,7 @@ public static class ServiceRegistration
         mauiAppBuilder.Services.AddSingleton<FormattingService>();
         mauiAppBuilder.Services.AddSingleton<INavigation>(sp => sp.GetRequiredService<INavigation>());
 		mauiAppBuilder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
+        mauiAppBuilder.Services.AddSingleton<EventStorageService>();
         
         return mauiAppBuilder;
     }
@@ -31,6 +33,7 @@ public static class ServiceRegistration
         mauiAppBuilder.Services.AddTransient<ToDoEditorPage>();
         mauiAppBuilder.Services.AddTransient<EditorPage>();
         mauiAppBuilder.Services.AddTransient<NotesListPage>();
+        mauiAppBuilder.Services.AddSingleton<CalendarPage>();
         
         return mauiAppBuilder;
     }

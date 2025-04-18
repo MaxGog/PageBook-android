@@ -13,5 +13,8 @@
         <ShellContent Title="Заметки" 
             ContentTemplate="{DataTemplate views:NotesListPage}" 
             Route="NotesListPage" />
+        <ShellContent Title="Календарь"
+            ContentTemplate="{DataTemplate views:CalendarPage}"
+            Route="CalendarPage"/>
     </TabBar>
 </Shell>

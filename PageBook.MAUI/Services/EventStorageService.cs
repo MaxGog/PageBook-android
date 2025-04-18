@@ -27,18 +27,18 @@ public class EventStorageService : IAsyncDisposable
     private void InitializeDatabase()
     {
         connection = new SQLiteAsyncConnection(databasePath);
-        connection.CreateTableAsync<ToDo>().Wait();
+        connection.CreateTableAsync<Event>().Wait();
     }
 
-    public async Task<ObservableCollection<ToDo>> GetAllEventsAsync()
+    public async Task<ObservableCollection<Event>> GetAllEventsAsync()
     {
         try
         {
             InitializeConnection();
-            var todo = await connection.Table<ToDo>()
+            var eventsItems = await connection.Table<Event>()
                 .OrderBy(n => n.CreatedAt)
                 .ToListAsync();
-            return new ObservableCollection<ToDo>(todo);
+            return new ObservableCollection<Event>(eventsItems);
         }
         catch (SQLiteException ex)
         {
@@ -46,12 +46,29 @@ public class EventStorageService : IAsyncDisposable
         }
     }
 
-    public async Task<ToDo> GetEventAsync(string id)
+    public async Task<ObservableCollection<Event>> GetEventsByDateAsync(DateTime date)
     {
         try
         {
             InitializeConnection();
-            return await connection.Table<ToDo>()
+            var events = await connection.Table<Event>()
+                .Where(e => e.CreatedAt.Date == date.Date)
+                .OrderBy(e => e.CreatedAt)
+                .ToListAsync();
+            return new ObservableCollection<Event>(events);
+        }
+        catch (SQLiteException ex)
+        {
+            throw new Exception($"Error getting events by date: {ex.Message}");
+        }
+    }
+
+    public async Task<Event> GetEventAsync(string id)
+    {
+        try
+        {
+            InitializeConnection();
+            return await connection.Table<Event>()
                 .Where(n => n.Id == id)
                 .FirstOrDefaultAsync();
         }
@@ -61,7 +78,7 @@ public class EventStorageService : IAsyncDisposable
         }
     }
 
-    public async Task SaveEventAsync(ToDo item)
+    public async Task SaveEventAsync(Event item)
     {
         try
         {
@@ -95,7 +112,7 @@ public class EventStorageService : IAsyncDisposable
         }
     }
 
-    public async Task UpdateEventAsync(ToDo item)
+    public async Task UpdateEventAsync(Event item)
     {
         try
         {
