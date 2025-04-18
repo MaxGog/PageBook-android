@@ -29,7 +29,6 @@
                     BackgroundColor="#FF5722"
                     TextColor="White"
                     CornerRadius="8"/>
-            
             <Button Grid.Column="1"
                     Text="{Binding SaveButtonText}"
                     Command="{Binding SaveCommand}"
@@ -38,5 +37,4 @@
                     CornerRadius="8"/>
         </Grid>
     </StackLayout>
-
 </ContentPage>

@@ -23,6 +23,14 @@ public class NoteStorageService : IAsyncDisposable
         connection.CreateTableAsync<Note>().Wait();
     }
 
+    private void InitializeConnection()
+    {
+        if (connection == null)
+        {
+            InitializeDatabase();
+        }
+    }
+
     public async Task<ObservableCollection<Note>> GetAllNotesAsync()
     {
         try
@@ -98,14 +106,6 @@ public class NoteStorageService : IAsyncDisposable
         catch (SQLiteException ex)
         {
             throw new Exception($"Ошибка при обновлении заметки: {ex.Message}");
-        }
-    }
-
-    private void InitializeConnection()
-    {
-        if (connection == null)
-        {
-            InitializeDatabase();
         }
     }
 

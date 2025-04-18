@@ -9,13 +9,13 @@ using PageBook.Views;
 
 namespace PageBook.ViewModels;
 
-public class MainViewModel : INotifyPropertyChanged
+public class NotesListViewModel : INotifyPropertyChanged
 {
     private readonly INavigation navigation;
     private readonly NoteStorageService noteStorageService;
     private ObservableCollection<Note> notes;
 
-    public MainViewModel(INavigation navigation)
+    public NotesListViewModel(INavigation navigation)
     {
         this.navigation = navigation;
         noteStorageService = new NoteStorageService();

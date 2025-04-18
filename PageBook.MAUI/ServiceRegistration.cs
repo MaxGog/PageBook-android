@@ -10,7 +10,7 @@ public static class ServiceRegistration
     {
         mauiAppBuilder.Services.AddSingleton<ToDoListViewModel>();
         mauiAppBuilder.Services.AddSingleton<EditorViewModel>();
-        mauiAppBuilder.Services.AddSingleton<MainViewModel>();
+        mauiAppBuilder.Services.AddSingleton<NotesListViewModel>();
         
         return mauiAppBuilder;
     }
@@ -30,7 +30,7 @@ public static class ServiceRegistration
         mauiAppBuilder.Services.AddTransient<ToDoListPage>();
         mauiAppBuilder.Services.AddTransient<ToDoEditorPage>();
         mauiAppBuilder.Services.AddTransient<EditorPage>();
-        mauiAppBuilder.Services.AddTransient<MainPage>();
+        mauiAppBuilder.Services.AddTransient<NotesListPage>();
         
         return mauiAppBuilder;
     }

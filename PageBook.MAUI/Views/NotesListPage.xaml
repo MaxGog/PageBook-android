@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:PageBook.ViewModels"
-             x:Class="PageBook.Views.MainPage"
+             x:Class="PageBook.Views.NotesListPage"
              Title="Мои заметки">
 
     <ContentPage.ToolbarItems>

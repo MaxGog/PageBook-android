@@ -6,23 +6,16 @@ using PageBook.Models;
 
 namespace PageBook.Services;
 
-public class ToDoStorageService : IAsyncDisposable
+public class EventStorageService : IAsyncDisposable
 {
     private readonly string databasePath;
     private SQLiteAsyncConnection connection;
 
-    public ToDoStorageService()
+    public EventStorageService()
     {
-        databasePath = Path.Combine(FileSystem.AppDataDirectory, "todo.db");
+        databasePath = Path.Combine(FileSystem.AppDataDirectory, "events.db");
         InitializeDatabase();
     }
-
-    private void InitializeDatabase()
-    {
-        connection = new SQLiteAsyncConnection(databasePath);
-        connection.CreateTableAsync<ToDo>().Wait();
-    }
-
     private void InitializeConnection()
     {
         if (connection == null)
@@ -31,7 +24,13 @@ public class ToDoStorageService : IAsyncDisposable
         }
     }
 
-    public async Task<ObservableCollection<ToDo>> GetAllToDoItemsAsync()
+    private void InitializeDatabase()
+    {
+        connection = new SQLiteAsyncConnection(databasePath);
+        connection.CreateTableAsync<ToDo>().Wait();
+    }
+
+    public async Task<ObservableCollection<ToDo>> GetAllEventsAsync()
     {
         try
         {
@@ -47,7 +46,7 @@ public class ToDoStorageService : IAsyncDisposable
         }
     }
 
-    public async Task<ToDo> GetToDoItemAsync(string id)
+    public async Task<ToDo> GetEventAsync(string id)
     {
         try
         {
@@ -62,7 +61,7 @@ public class ToDoStorageService : IAsyncDisposable
         }
     }
 
-    public async Task SaveToDoItemAsync(ToDo item)
+    public async Task SaveEventAsync(ToDo item)
     {
         try
         {
@@ -83,7 +82,7 @@ public class ToDoStorageService : IAsyncDisposable
         }
     }
 
-    public async Task DeleteToDoItemAsync(string id)
+    public async Task DeleteEventAsync(string id)
     {
         try
         {
@@ -96,7 +95,7 @@ public class ToDoStorageService : IAsyncDisposable
         }
     }
 
-    public async Task UpdateToDoItemAsync(ToDo item)
+    public async Task UpdateEventAsync(ToDo item)
     {
         try
         {
