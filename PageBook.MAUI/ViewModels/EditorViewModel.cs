@@ -15,7 +15,8 @@ public class EditorViewModel : INotifyPropertyChanged
     private readonly Editor editor;
     private string content;
     public string id;
-    
+
+    [Obsolete]
     public EditorViewModel(INavigation navigation, Editor editor)
     {
         this.navigation = navigation;
@@ -49,6 +50,7 @@ public class EditorViewModel : INotifyPropertyChanged
         formattingService.ApplyFormatting(selectedText, formatType);
     }
 
+    [Obsolete]
     private async Task SaveNoteAsync()
     {
         try
@@ -68,10 +70,14 @@ public class EditorViewModel : INotifyPropertyChanged
         }
         catch (Exception ex)
         {
-            await Application.Current.MainPage.DisplayAlert("Ошибка", $"Не удалось сохранить заметку: {ex.Message}", "OK");
+            await Application.Current.MainPage.DisplayAlert(
+                "Ошибка", 
+                $"Не удалось сохранить заметку: {ex.Message}", 
+                "OK");
         }
     }
 
+    [Obsolete]
     private async Task RemoveNoteAsync()
     {
         try
@@ -90,7 +96,10 @@ public class EditorViewModel : INotifyPropertyChanged
         }
         catch (Exception ex)
         {
-            await Application.Current.MainPage.DisplayAlert("Ошибка", $"Не удалось удалить заметку: {ex.Message}", "OK");
+            await Application.Current.MainPage.DisplayAlert(
+                "Ошибка", 
+                $"Не удалось удалить заметку: {ex.Message}", 
+                "OK");
         }
     }
 

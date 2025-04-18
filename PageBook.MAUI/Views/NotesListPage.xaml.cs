@@ -11,11 +11,14 @@ public partial class NotesListPage : ContentPage
         BindingContext = new NotesListViewModel(Navigation);
     }
 
+    [Obsolete]
     protected override async void OnAppearing()
     {
         base.OnAppearing();
         await ((NotesListViewModel)BindingContext).LoadNotesAsync();
     }
+
+    [Obsolete]
     private async void OnNoteSelected(object sender, SelectedItemChangedEventArgs e)
     {
         if (e.SelectedItem as Note != null)

@@ -14,6 +14,7 @@ public partial class ToDoListPage : ContentPage
         BindingContext = _viewModel = new ToDoListViewModel(Navigation);
     }
 
+    [Obsolete]
     private async void ToDoSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if ((ToDo)e.CurrentSelection != null)

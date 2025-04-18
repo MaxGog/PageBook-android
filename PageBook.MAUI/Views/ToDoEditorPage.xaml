@@ -8,21 +8,17 @@
         <Label Text="{Binding Title}"
                FontSize="Title"
                HorizontalOptions="Center"/>
-        
         <Entry Placeholder="Введите название задачи..."
                Text="{Binding CurrentItem.Title}"
                ReturnType="Next"/>
-        
         <Editor Placeholder="Введите описание задачи..."
                 Text="{Binding CurrentItem.Description}"
                 HeightRequest="150"/>
-        
         <Grid ColumnSpacing="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            
+            </Grid.ColumnDefinitions> 
             <Button Grid.Column="0"
                     Text="Отмена"
                     Command="{Binding CancelCommand}"

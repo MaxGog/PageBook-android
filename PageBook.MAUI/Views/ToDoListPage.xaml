@@ -10,27 +10,30 @@
     
     <ScrollView>
         <StackLayout Padding="20">
-            <CollectionView Grid.Row="1"
-                        ItemsSource="{Binding Items}"
-                        SelectionMode="Single"
-                        EmptyView="Нет задач"
-                        SelectionChanged="ToDoSelectionChanged">
+            <CollectionView Grid.Row="1" 
+                ItemsSource="{Binding Items}" 
+                EmptyView="Нет задач"
+                SelectionMode="Single" 
+                SelectionChanged="ToDoSelectionChanged">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Border Padding="20" BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}">
+                        <Border Padding="20" 
+                            BackgroundColor="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                
-                                <Label Grid.Row="0"
-                                    Text="{Binding Title}"
+                                <Label Grid.Row="0" 
+                                    Text="{Binding Title}" 
                                     FontAttributes="Bold"/>
-                                
-                                <Label Grid.Row="1"
+                                <Label Grid.Row="1" 
+                                    Text="{Binding Description}" 
+                                    TextColor="#666"/>
+                                <Label Grid.Row="2" 
                                     Text="{Binding CreatedAt, StringFormat='Дата: {0:dd.MM.yyyy HH:mm}'}"
-                                    FontAttributes="Italic"
+                                    FontAttributes="Italic" 
                                     TextColor="#666"/>
                             </Grid>
                         </Border>

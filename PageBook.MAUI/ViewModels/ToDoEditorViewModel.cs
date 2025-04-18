@@ -17,6 +17,7 @@ public class ToDoEditorViewModel : INotifyPropertyChanged
     private string _title;
     private string _saveButtonText;
 
+    [Obsolete]
     public ToDoEditorViewModel(INavigation navigation, ToDo item = null)
     {
         _navigation = navigation;
@@ -50,6 +51,7 @@ public class ToDoEditorViewModel : INotifyPropertyChanged
     public ICommand SaveCommand { get; }
     public ICommand CancelCommand { get; }
 
+    [Obsolete]
     private async Task SaveAsync()
     {
         try
@@ -59,7 +61,10 @@ public class ToDoEditorViewModel : INotifyPropertyChanged
         }
         catch (Exception ex)
         {
-            await Application.Current.MainPage.DisplayAlert("Ошибка", $"Не удалось сохранить задачу: {ex.Message}", "OK");
+            await Application.Current.MainPage.DisplayAlert(
+                "Ошибка", 
+                $"Не удалось сохранить задачу: {ex.Message}", 
+                "OK");
         }
     }
 

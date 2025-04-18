@@ -5,12 +5,15 @@ namespace PageBook.Views;
 public partial class ToDoEditorPage : ContentPage
 {
     private ToDoEditorViewModel viewModel;
+
+    [Obsolete]
     public ToDoEditorPage()
     {
         InitializeComponent();
         BindingContext = viewModel = new ToDoEditorViewModel(Navigation);
     }
 
+    [Obsolete]
     public ToDoEditorPage(ToDo item)
     {
         InitializeComponent();

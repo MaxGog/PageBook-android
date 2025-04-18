@@ -4,10 +4,14 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:PageBook.Views"
-    Shell.FlyoutBehavior="Flyout"
     Title="PageBook">
 
-    <ShellContent Title="Заметки" ContentTemplate="{DataTemplate views:NotesListPage}" Route="NotesListPage" />
-    <ShellContent Title="To Do лист" ContentTemplate="{DataTemplate views:ToDoListPage}" Route="ToDoListPage"/>
-
+    <TabBar>
+        <ShellContent Title="Задачи" 
+            ContentTemplate="{DataTemplate views:ToDoListPage}" 
+            Route="ToDoListPage"/>
+        <ShellContent Title="Заметки" 
+            ContentTemplate="{DataTemplate views:NotesListPage}" 
+            Route="NotesListPage" />
+    </TabBar>
 </Shell>

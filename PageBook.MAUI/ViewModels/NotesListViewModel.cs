@@ -15,6 +15,7 @@ public class NotesListViewModel : INotifyPropertyChanged
     private readonly NoteStorageService noteStorageService;
     private ObservableCollection<Note> notes;
 
+    [Obsolete]
     public NotesListViewModel(INavigation navigation)
     {
         this.navigation = navigation;
@@ -41,6 +42,7 @@ public class NotesListViewModel : INotifyPropertyChanged
     public ICommand sortNameCommand { get; private set; }
     public ICommand sortDateCommand { get; private set; }
 
+    [Obsolete]
     public async Task LoadNotesAsync()
     {
         try
@@ -54,6 +56,7 @@ public class NotesListViewModel : INotifyPropertyChanged
         }
     }
 
+    [Obsolete]
     private async Task AddNoteAsync()
     {
         if (navigation == null)
@@ -65,6 +68,7 @@ public class NotesListViewModel : INotifyPropertyChanged
         await navigation.PushAsync(new EditorPage());
     }
 
+    [Obsolete]
     public async Task EditNoteAsync(Note note)
     {
         if (navigation == null)

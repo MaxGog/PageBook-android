@@ -14,8 +14,8 @@ public class ToDoListViewModel : INotifyPropertyChanged
     private readonly INavigation navigation;
     private readonly ToDoStorageService todoStorageService;
     private ObservableCollection<ToDo> items;
-    private bool isInitialized;
 
+    [Obsolete]
     public ToDoListViewModel(INavigation navigation)
     {
         this.navigation = navigation;
@@ -23,12 +23,12 @@ public class ToDoListViewModel : INotifyPropertyChanged
         LoadToDoItemsCommand = new Command(async () => await LoadToDoItemsAsync());
         AddToDoItemCommand = new Command(async () => await AddToDoItemAsync());
         EditToDoItemCommand = new Command<ToDo>(async (item) => await EditToDoItemAsync(item));
-        sortNameCommand = new Command(() => SortedByName());
-        sortDateCommand = new Command(() => SortedByDate());
-        
+        SortNameCommand = new Command(() => SortedByName());
+        SortDateCommand = new Command(() => SortedByDate());
         _ = LoadToDoItemsAsync();
     }
 
+    [Obsolete]
     private async Task LoadToDoItemsAsync()
     {
         try
@@ -55,24 +55,32 @@ public class ToDoListViewModel : INotifyPropertyChanged
     public ICommand AddToDoItemCommand { get; }
     public ICommand EditToDoItemCommand { get; }
 
-    public ICommand sortNameCommand { get; private set; }
-    public ICommand sortDateCommand { get; private set; }
+    public ICommand SortNameCommand { get; private set; }
+    public ICommand SortDateCommand { get; private set; }
 
+    [Obsolete]
     private async Task AddToDoItemAsync()
     {
         if (navigation == null)
         {
-            await Application.Current.MainPage.DisplayAlert("Ошибка", "Навигация не инициализирована!", "OK");
+            await Application.Current.MainPage.DisplayAlert(
+                "Ошибка", 
+                "Навигация не инициализирована!", 
+                "OK");
             return;
         }
         await navigation.PushAsync(new ToDoEditorPage());
     }
 
+    [Obsolete]
     public async Task EditToDoItemAsync(ToDo item)
     {
         if (navigation == null)
         {
-            await Application.Current.MainPage.DisplayAlert("Ошибка", "Навигация не инициализирована!", "OK");
+            await Application.Current.MainPage.DisplayAlert(
+                "Ошибка", 
+                "Навигация не инициализирована!", 
+                "OK");
             return;
         }
         await navigation.PushAsync(new ToDoEditorPage(item));
