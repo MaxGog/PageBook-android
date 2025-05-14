@@ -1,6 +1,6 @@
 [versions]
 activityComposeVersion = "1.8.0"
-agp = "8.9.1"
+agp = "8.10.0"
 androidxMaterialIconsExtended = "1.5.4"
 coilCompose = "2.5.0"
 composecalendar = "1.3.0"
