@@ -1,4 +1,4 @@
-package ru.maxgog.pagebook.ui
+package ru.maxgog.pagebook.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons

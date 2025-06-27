@@ -1,10 +1,8 @@
-package ru.maxgog.pagebook.ui
+package ru.maxgog.pagebook.ui.screens
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,7 +24,6 @@ import ru.maxgog.pagebook.R
 import ru.maxgog.pagebook.models.NoteModel
 import ru.maxgog.pagebook.ui.items.NoteItem
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NotesScreen(viewModel: NotesViewModel) {
     val notes by viewModel.allNotes.collectAsState(initial = emptyList())

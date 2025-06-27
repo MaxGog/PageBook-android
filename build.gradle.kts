@@ -4,14 +4,14 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
 
-    id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0" apply false
-    id("com.google.devtools.ksp") version "2.0.21-1.0.27" apply false
-    id("com.google.dagger.hilt.android") version "2.48" apply false
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.2.0" apply false
+    id("com.google.devtools.ksp") version "2.2.0-2.0.2" apply false
+    id("com.google.dagger.hilt.android") version "2.56.2" apply false
 }
 
 buildscript {
     dependencies {
-        classpath("com.android.tools.build:gradle:8.11.0")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.9.0")
+        classpath(libs.gradle)
+        classpath(libs.kotlin.gradle.plugin)
     }
 }

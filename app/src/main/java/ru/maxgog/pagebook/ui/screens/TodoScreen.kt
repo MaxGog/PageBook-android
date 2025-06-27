@@ -1,7 +1,5 @@
-package ru.maxgog.pagebook.ui
+package ru.maxgog.pagebook.ui.screens
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,7 +43,6 @@ import ru.maxgog.pagebook.ui.theme.TodoListAppTheme
 import ru.maxgog.pagebook.viewmodels.TodoViewModel
 
 
-@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TodoScreen(viewModel: TodoViewModel) {
@@ -199,7 +196,6 @@ fun TodoScreen(viewModel: TodoViewModel) {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun TodoPreview() {

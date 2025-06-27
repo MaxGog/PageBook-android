@@ -1,4 +1,4 @@
-package ru.maxgog.pagebook.ui
+package ru.maxgog.pagebook.ui.screens
 
 import android.annotation.SuppressLint
 import ru.maxgog.pagebook.models.EventModel
@@ -6,8 +6,6 @@ import ru.maxgog.pagebook.ui.dialogs.AddEventDialog
 import ru.maxgog.pagebook.ui.items.EventItem
 import ru.maxgog.pagebook.viewmodels.CalendarViewModel
 
-import android.os.Build
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -29,7 +27,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -54,8 +51,6 @@ import java.time.temporal.WeekFields
 import java.util.Locale
 
 @SuppressLint("StateFlowValueCalledInComposition")
-@OptIn(ExperimentalFoundationApi::class)
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CalendarScreen(viewModel: CalendarViewModel) {
     val currentMonth = remember { YearMonth.now() }
@@ -151,7 +146,6 @@ fun CalendarScreen(viewModel: CalendarViewModel) {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun WeekHeaders() {
     val daysOfWeek = remember { WeekFields.of(Locale.getDefault()).firstDayOfWeek.let { firstDay ->
@@ -170,7 +164,6 @@ fun WeekHeaders() {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun MonthHeader(yearMonth: YearMonth) {
     Text(
@@ -183,7 +176,6 @@ fun MonthHeader(yearMonth: YearMonth) {
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun Day(
     day: CalendarDay,

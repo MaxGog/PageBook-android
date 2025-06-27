@@ -16,6 +16,7 @@ class PageBookApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
 
         val notesDb = NoteRoomDatabase.getDatabase(this)
         notesRepository = NotesRepository(notesDb.noteDao())
@@ -25,5 +26,13 @@ class PageBookApplication : Application() {
 
         val eventsDb = EventRoomDatabase.getDatabase(this)
         eventsRepository = EventRepository(eventsDb.eventDao())
+    }
+
+    companion object {
+        private var instance: PageBookApplication? = null
+
+        fun getApplication(): PageBookApplication {
+            return instance ?: throw IllegalStateException("Application not initialized")
+        }
     }
 }
