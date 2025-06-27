@@ -1,8 +1,11 @@
 package ru.maxgog.pagebook.ui.app
 
-
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -21,6 +24,8 @@ fun CombinedApp(
     }
 ) {
     val navController = rememberNavController()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
 
     val notesViewModel: NotesViewModel = viewModel(
         viewModelStoreOwner = viewModelStoreOwner,
@@ -37,14 +42,19 @@ fun CombinedApp(
         factory = CalendarViewModel.Factory
     )
 
-    AppContent(
-        navController = navController,
-        notesViewModel = notesViewModel,
-        todoViewModel = todoViewModel,
-        calendarViewModel = calendarViewModel
-    )
+    Scaffold(
+        snackbarHost = { SnackbarHost(snackbarHostState) },
+        bottomBar = { BottomNavBar(navController) }
+    ) { padding ->
+        AppNavHost(
+            navController = navController,
+            paddingValues = padding,
+            notesViewModel = notesViewModel,
+            todoViewModel = todoViewModel,
+            calendarViewModel = calendarViewModel,
+        )
+    }
 }
-
 @Composable
 private fun AppContent(
     navController: NavHostController,
