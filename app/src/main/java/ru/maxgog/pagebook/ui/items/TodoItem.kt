@@ -1,101 +1,123 @@
 package ru.maxgog.pagebook.ui.items
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import ru.maxgog.pagebook.R
 import ru.maxgog.pagebook.models.TodoModel
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TodoItem(
     todo: TodoModel,
     onTodoClick: (TodoModel) -> Unit,
     onDeleteClick: (TodoModel) -> Unit,
-    onAddToCalendarClick: (TodoModel) -> Unit
+    onAddToCalendarClick: (TodoModel) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        shape = MaterialTheme.shapes.medium,
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 1.dp,
+            pressedElevation = 0.dp
+        )
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Checkbox(
                 checked = todo.isCompleted,
-                onCheckedChange = { isChecked ->
-                    onTodoClick(todo.copy(isCompleted = isChecked))
-                }
+                onCheckedChange = { onTodoClick(todo.copy(isCompleted = it)) },
+                colors = CheckboxDefaults.colors(
+                    checkedColor = MaterialTheme.colorScheme.primary,
+                    uncheckedColor = MaterialTheme.colorScheme.outline
+                )
             )
-            Spacer(modifier = Modifier.width(8.dp))
-            Column(modifier = Modifier.weight(1f)) {
+
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
                 Text(
                     text = todo.title,
                     style = MaterialTheme.typography.titleMedium,
-                    textDecoration = if (todo.isCompleted) TextDecoration.LineThrough else TextDecoration.None
+                    color = MaterialTheme.colorScheme.onSurface,
+                    textDecoration = if (todo.isCompleted) TextDecoration.LineThrough else TextDecoration.None,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
+
                 todo.description?.let {
-                    Spacer(modifier = Modifier.height(4.dp))
                     Text(
                         text = it,
-                        style = MaterialTheme.typography.bodySmall,
-                        textDecoration = if (todo.isCompleted) TextDecoration.LineThrough else TextDecoration.None
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        textDecoration = if (todo.isCompleted) TextDecoration.LineThrough else TextDecoration.None,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
+
                 if (todo.hasReminder && todo.reminderTime != null) {
                     val reminderText = remember(todo.reminderTime) {
                         Instant.ofEpochMilli(todo.reminderTime)
                             .atZone(ZoneId.systemDefault())
-                            .format(DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm"))
+                            .format(DateTimeFormatter.ofPattern("MMM dd, HH:mm"))
                     }
                     Text(
-                        text = "Reminder: $reminderText",
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.secondary
+                        text = reminderText,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
-
             }
+
             if (todo.hasReminder && !todo.isAddedToCalendar) {
-                Button(
+                FilledTonalButton(
                     onClick = { onAddToCalendarClick(todo) },
-                    modifier = Modifier.padding(4.dp)
+                    modifier = Modifier.padding(start = 8.dp),
+                    colors = ButtonDefaults.filledTonalButtonColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                    ),
+                    contentPadding = ButtonDefaults.ButtonWithIconContentPadding
                 ) {
-                    Text("Add to Calendar")
+                    Text(
+                        text = "Добавить в календарь",
+                        style = MaterialTheme.typography.labelMedium
+                    )
                 }
             }
-            IconButton(onClick = { onDeleteClick(todo) }) {
-                Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete))
+
+            IconButton(
+                onClick = { onDeleteClick(todo) },
+                colors = IconButtonDefaults.iconButtonColors(
+                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Удалить задачу"
+                )
             }
         }
     }

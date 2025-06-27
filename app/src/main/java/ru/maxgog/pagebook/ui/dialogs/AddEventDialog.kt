@@ -5,10 +5,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,64 +14,100 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import kotlinx.datetime.LocalDate
 import ru.maxgog.pagebook.R
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddEventDialog(
     date: LocalDate,
     onDismiss: () -> Unit,
-    onConfirm: (title: String, description: String, date: LocalDate, time: String) -> Unit
+    onConfirm: (title: String, description: String, date: LocalDate, time: String) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
     var time by remember { mutableStateOf("12:00") }
+    val timePattern = remember { Regex("^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$") }
+    val isTimeValid = remember(time) { timePattern.matches(time) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(stringResource(R.string.add_event)) },
+        properties = DialogProperties(dismissOnBackPress = true, dismissOnClickOutside = true),
+        modifier = modifier,
+        title = {
+            Text(
+                text = stringResource(R.string.add_event),
+                style = MaterialTheme.typography.headlineSmall
+            )
+        },
         text = {
-            Column {
+            Column(modifier = Modifier.padding(top = 8.dp)) {
                 OutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
                     label = { Text(stringResource(R.string.event_title)) },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    isError = title.isBlank(),
+                    supportingText = {
+                        if (title.isBlank()) {
+                            Text("Пустой текст")
+                        }
+                    }
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+
+                Spacer(modifier = Modifier.height(16.dp))
+
                 OutlinedTextField(
                     value = description,
                     onValueChange = { description = it },
                     label = { Text(stringResource(R.string.event_description)) },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    maxLines = 3
                 )
-                Spacer(modifier = Modifier.height(8.dp))
+
+                Spacer(modifier = Modifier.height(16.dp))
+
                 OutlinedTextField(
                     value = time,
-                    onValueChange = { time = it },
+                    onValueChange = { if (it.length <= 5) time = it },
                     label = { Text(stringResource(R.string.event_time)) },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = true,
+                    isError = !isTimeValid,
+                    supportingText = {
+                        if (!isTimeValid) {
+                            Text("Неправильное время")
+                        }
+                    },
+                    placeholder = { Text("HH:MM") }
                 )
+
                 Text(
-                    text = "$date",
+                    text = date.toString(),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(top = 8.dp)
                 )
             }
         },
         confirmButton = {
-            Button(
+            FilledTonalButton(
                 onClick = {
-                    if (title.isNotBlank()) {
+                    if (title.isNotBlank() && isTimeValid) {
                         onConfirm(title, description, date, time)
-                        onDismiss()
                     }
-                }
+                },
+                enabled = title.isNotBlank() && isTimeValid,
+                colors = ButtonDefaults.filledTonalButtonColors()
             ) {
                 Text(stringResource(R.string.add))
             }
         },
         dismissButton = {
-            Button(onClick = onDismiss) {
+            TextButton(onClick = onDismiss) {
                 Text(stringResource(R.string.cancel))
             }
         }

@@ -1,38 +1,23 @@
 package ru.maxgog.pagebook
 
 import android.app.Application
-import ru.maxgog.pagebook.rooms.NoteRoomDatabase
-import ru.maxgog.pagebook.repositories.NotesRepository
-import ru.maxgog.pagebook.rooms.TodoRoomDatabase
-import ru.maxgog.pagebook.repositories.TodoRepository
-import ru.maxgog.pagebook.rooms.EventRoomDatabase
-import ru.maxgog.pagebook.repositories.EventRepository
+import ru.maxgog.pagebook.rooms.*
+import ru.maxgog.pagebook.repositories.*
 
 class PageBookApplication : Application() {
-    lateinit var notesRepository: NotesRepository
-    lateinit var todoRepository: TodoRepository
-    lateinit var eventsRepository: EventRepository
-
+    val notesRepository by lazy { NotesRepository(NoteRoomDatabase.getDatabase(this).noteDao()) }
+    val todoRepository by lazy { TodoRepository(TodoRoomDatabase.getDatabase(this).todoDao()) }
+    val eventsRepository by lazy { EventRepository(EventRoomDatabase.getDatabase(this).eventDao()) }
 
     override fun onCreate() {
         super.onCreate()
         instance = this
-
-        val notesDb = NoteRoomDatabase.getDatabase(this)
-        notesRepository = NotesRepository(notesDb.noteDao())
-
-        val todoDb = TodoRoomDatabase.getDatabase(this)
-        todoRepository = TodoRepository(todoDb.todoDao())
-
-        val eventsDb = EventRoomDatabase.getDatabase(this)
-        eventsRepository = EventRepository(eventsDb.eventDao())
     }
 
     companion object {
-        private var instance: PageBookApplication? = null
+        @Volatile private var instance: PageBookApplication? = null
 
-        fun getApplication(): PageBookApplication {
-            return instance ?: throw IllegalStateException("Application not initialized")
-        }
+        fun getApplication(): PageBookApplication =
+            instance ?: throw IllegalStateException("Application not initialized")
     }
 }

@@ -5,9 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import io.github.boguszpawlowski.composecalendar.kotlinxDateTime.now
 import jakarta.inject.Inject
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
 import ru.maxgog.pagebook.PageBookApplication
@@ -17,17 +15,18 @@ import ru.maxgog.pagebook.repositories.EventRepository
 class CalendarViewModel @Inject constructor(
     private val repository: EventRepository
 ) : ViewModel() {
-    private val _selectedDate = MutableStateFlow(LocalDate.now())
-    val selectedDate: StateFlow<LocalDate> = _selectedDate.asStateFlow()
 
-    private val _events = MutableStateFlow<List<EventModel>>(emptyList())
-    val events: StateFlow<List<EventModel>> = _events.asStateFlow()
+    private val _selectedDate = MutableStateFlow(LocalDate.now())
+    val selectedDate = _selectedDate.asStateFlow()
+
+    private val _events = MutableStateFlow(emptyList<EventModel>())
+    val events = _events.asStateFlow()
 
     private val _showDialog = MutableStateFlow(false)
-    val showDialog: StateFlow<Boolean> = _showDialog.asStateFlow()
+    val showDialog = _showDialog.asStateFlow()
 
     private val _dialogDate = MutableStateFlow(LocalDate.now())
-    val dialogDate: StateFlow<LocalDate> = _dialogDate.asStateFlow()
+    val dialogDate = _dialogDate.asStateFlow()
 
     init {
         loadEvents()
@@ -46,34 +45,25 @@ class CalendarViewModel @Inject constructor(
         _showDialog.value = false
     }
 
-    fun addEvent(event: EventModel) {
-        viewModelScope.launch {
-            repository.insert(event)
-            loadEvents()
-        }
+    fun addEvent(event: EventModel) = viewModelScope.launch {
+        repository.insert(event)
+        loadEvents()
     }
 
-    fun deleteEvent(event: EventModel) {
-        viewModelScope.launch {
-            repository.delete(event)
-            loadEvents()
-        }
+    fun deleteEvent(event: EventModel) = viewModelScope.launch {
+        repository.delete(event)
+        loadEvents()
     }
 
-    private fun loadEvents() {
-        viewModelScope.launch {
-            _events.value = repository.getAllEvents()
-        }
+    private fun loadEvents() = viewModelScope.launch {
+        _events.value = repository.getAllEvents()
     }
+
     companion object {
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                val application = (PageBookApplication.getApplication())
-                return CalendarViewModel(
-                    application.eventsRepository
-                ) as T
-            }
+            override fun <T : ViewModel> create(modelClass: Class<T>): T =
+                CalendarViewModel(PageBookApplication.getApplication().eventsRepository) as T
         }
     }
 }

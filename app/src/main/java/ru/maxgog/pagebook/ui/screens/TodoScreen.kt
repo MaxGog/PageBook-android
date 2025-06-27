@@ -20,13 +20,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import ru.maxgog.pagebook.R
 import ru.maxgog.pagebook.models.TodoModel
+import ru.maxgog.pagebook.ui.dialogs.AddTodoDialog
+import ru.maxgog.pagebook.ui.dialogs.DateTimePickerDialog
 import ru.maxgog.pagebook.ui.items.TodoItem
 import ru.maxgog.pagebook.ui.theme.TodoListAppTheme
 import ru.maxgog.pagebook.viewmodels.TodoViewModel
@@ -173,134 +173,6 @@ private fun EmptyState(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun AddTodoDialog(
-    title: String,
-    onTitleChange: (String) -> Unit,
-    description: String,
-    onDescriptionChange: (String) -> Unit,
-    selectedDate: LocalDate?,
-    selectedTime: LocalTime?,
-    onDateTimeClick: () -> Unit,
-    onDismiss: () -> Unit,
-    onConfirm: () -> Unit
-) {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text("Добавить задачу") },
-        text = {
-            Column {
-                OutlinedTextField(
-                    value = title,
-                    onValueChange = onTitleChange,
-                    label = { Text(stringResource(R.string.title)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    singleLine = true,
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = MaterialTheme.colorScheme.surface,
-                        unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                        focusedLabelColor = MaterialTheme.colorScheme.primary,
-                        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                        unfocusedIndicatorColor = MaterialTheme.colorScheme.outline
-                    )
-                )
-                Spacer(Modifier.height(16.dp))
-                OutlinedTextField(
-                    value = description,
-                    onValueChange = onDescriptionChange,
-                    label = { Text(stringResource(R.string.description)) },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = MaterialTheme.colorScheme.surface,
-                        unfocusedContainerColor = MaterialTheme.colorScheme.surface,
-                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
-                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                        focusedLabelColor = MaterialTheme.colorScheme.primary,
-                        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        focusedIndicatorColor = MaterialTheme.colorScheme.primary,
-                        unfocusedIndicatorColor = MaterialTheme.colorScheme.outline
-                    )
-                )
-                Spacer(Modifier.height(16.dp))
-                FilledTonalButton(
-                    onClick = onDateTimeClick,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        if (selectedDate != null && selectedTime != null) {
-                            val dateFormat = DateTimeFormatter.ofPattern("dd MMM yyyy")
-                            val timeFormat = DateTimeFormatter.ofPattern("HH:mm")
-                            "Напоминание: ${selectedDate.format(dateFormat)} ${selectedTime.format(timeFormat)}"
-                        } else {
-                            "Поставить напоминание"
-                        }
-                    )
-                }
-            }
-        },
-        confirmButton = {
-            Button(
-                onClick = onConfirm,
-                enabled = title.isNotBlank()
-            ) {
-                Text(stringResource(R.string.add))
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.cancel))
-            }
-        }
-    )
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-private fun DateTimePickerDialog(
-    onDismiss: () -> Unit,
-    onConfirm: (LocalDate, LocalTime) -> Unit
-) {
-    val datePickerState = rememberDatePickerState()
-    val timePickerState = rememberTimePickerState()
-
-    DatePickerDialog(
-        onDismissRequest = onDismiss,
-        confirmButton = {
-            Button(
-                onClick = {
-                    datePickerState.selectedDateMillis?.let { millis ->
-                        val date = Instant.ofEpochMilli(millis)
-                            .atZone(ZoneId.systemDefault())
-                            .toLocalDate()
-                        val time = LocalTime.of(timePickerState.hour, timePickerState.minute)
-                        onConfirm(date, time)
-                    }
-                },
-                enabled = datePickerState.selectedDateMillis != null
-            ) {
-                Text(stringResource(R.string.ok))
-            }
-        },
-        dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.cancel))
-            }
-        }
-    ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 16.dp)
-        ) {
-            DatePicker(state = datePickerState)
-            Spacer(Modifier.height(16.dp))
-            TimePicker(state = timePickerState)
-        }
     }
 }
 
