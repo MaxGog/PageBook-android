@@ -1,5 +1,7 @@
 package ru.maxgog.pagebook.ui
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +12,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -17,21 +21,31 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-
+import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+
 import ru.maxgog.pagebook.R
 import ru.maxgog.pagebook.models.TodoModel
 import ru.maxgog.pagebook.ui.items.TodoItem
 import ru.maxgog.pagebook.ui.theme.TodoListAppTheme
-
 import ru.maxgog.pagebook.viewmodels.TodoViewModel
 
+
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TodoScreen(viewModel: TodoViewModel) {
@@ -39,6 +53,9 @@ fun TodoScreen(viewModel: TodoViewModel) {
     var showDialog by remember { mutableStateOf(false) }
     var newTodoTitle by remember { mutableStateOf("") }
     var newTodoDescription by remember { mutableStateOf("") }
+    var showDatePicker by remember { mutableStateOf(false) }
+    var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
+    var selectedTime by remember { mutableStateOf<LocalTime?>(null) }
 
     Scaffold(
         topBar = {
@@ -65,6 +82,9 @@ fun TodoScreen(viewModel: TodoViewModel) {
                     },
                     onDeleteClick = { todoToDelete ->
                         viewModel.delete(todoToDelete)
+                    },
+                    onAddToCalendarClick = { todo ->
+                        viewModel.addToCalendar(todo)
                     }
                 )
             }
@@ -91,20 +111,41 @@ fun TodoScreen(viewModel: TodoViewModel) {
                         label = { Text(stringResource(R.string.description)) },
                         modifier = Modifier.fillMaxWidth()
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Button(
+                        onClick = { showDatePicker = true },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            if (selectedDate != null && selectedTime != null)
+                                "Reminder: ${selectedDate!!} ${selectedTime!!.format(
+                                    DateTimeFormatter.ofPattern("HH:mm"))}"
+                            else
+                                "Set Reminder"
+                        )
+                    }
                 }
             },
             confirmButton = {
                 Button(
                     onClick = {
                         if (newTodoTitle.isNotBlank()) {
+                            val reminderTime = if (selectedDate != null && selectedTime != null) {
+                                selectedDate!!.atTime(selectedTime!!).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+                            } else null
+
                             viewModel.insert(
                                 TodoModel(
                                     title = newTodoTitle,
-                                    description = newTodoDescription
+                                    description = newTodoDescription,
+                                    hasReminder = reminderTime != null,
+                                    reminderTime = reminderTime
                                 )
                             )
                             newTodoTitle = ""
                             newTodoDescription = ""
+                            selectedDate = null
+                            selectedTime = null
                             showDialog = false
                         }
                     }
@@ -121,8 +162,44 @@ fun TodoScreen(viewModel: TodoViewModel) {
             }
         )
     }
+
+    if (showDatePicker) {
+        val datePickerState = rememberDatePickerState()
+        val timePickerState = rememberTimePickerState()
+
+        DatePickerDialog(
+            onDismissRequest = { showDatePicker = false },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        selectedDate = Instant.ofEpochMilli(datePickerState.selectedDateMillis!!)
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate()
+                        selectedTime = LocalTime.of(timePickerState.hour, timePickerState.minute)
+                        showDatePicker = false
+                    }
+                ) {
+                    Text("OK")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { showDatePicker = false }
+                ) {
+                    Text("Cancel")
+                }
+            }
+        ) {
+            Column {
+                DatePicker(state = datePickerState)
+                Spacer(modifier = Modifier.height(16.dp))
+                TimePicker(state = timePickerState)
+            }
+        }
+    }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
 fun TodoPreview() {
@@ -133,7 +210,8 @@ fun TodoPreview() {
                 description = stringResource(R.string.description)
             ),
             onTodoClick = {},
-            onDeleteClick = {}
+            onDeleteClick = {},
+            onAddToCalendarClick = {}
         )
     }
 }

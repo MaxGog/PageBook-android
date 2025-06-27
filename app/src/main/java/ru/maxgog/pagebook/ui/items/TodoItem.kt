@@ -1,5 +1,7 @@
 package ru.maxgog.pagebook.ui.items
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
@@ -17,6 +20,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -24,12 +28,17 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import ru.maxgog.pagebook.R
 import ru.maxgog.pagebook.models.TodoModel
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun TodoItem(
     todo: TodoModel,
     onTodoClick: (TodoModel) -> Unit,
-    onDeleteClick: (TodoModel) -> Unit
+    onDeleteClick: (TodoModel) -> Unit,
+    onAddToCalendarClick: (TodoModel) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -63,6 +72,27 @@ fun TodoItem(
                         style = MaterialTheme.typography.bodySmall,
                         textDecoration = if (todo.isCompleted) TextDecoration.LineThrough else TextDecoration.None
                     )
+                }
+                if (todo.hasReminder && todo.reminderTime != null) {
+                    val reminderText = remember(todo.reminderTime) {
+                        Instant.ofEpochMilli(todo.reminderTime)
+                            .atZone(ZoneId.systemDefault())
+                            .format(DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm"))
+                    }
+                    Text(
+                        text = "Reminder: $reminderText",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.secondary
+                    )
+                }
+
+            }
+            if (todo.hasReminder && !todo.isAddedToCalendar) {
+                Button(
+                    onClick = { onAddToCalendarClick(todo) },
+                    modifier = Modifier.padding(4.dp)
+                ) {
+                    Text("Add to Calendar")
                 }
             }
             IconButton(onClick = { onDeleteClick(todo) }) {

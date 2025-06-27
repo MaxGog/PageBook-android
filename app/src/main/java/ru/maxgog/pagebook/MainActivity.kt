@@ -45,8 +45,11 @@ class MainActivity : ComponentActivity() {
             PageBookTheme {
                 val app = application as PageBookApplication
                 val notesViewModelFactory = NotesViewModelFactory(app.notesRepository)
-                val todoViewModelFactory = TodoViewModelFactory(app.todoRepository)
                 val calendarViewModelFactory = CalendarViewModelFactory(app.eventsRepository)
+                val todoViewModelFactory = TodoViewModelFactory(
+                    app.todoRepository,
+                    app.eventsRepository
+                )
                 CompositionLocalProvider(
                     LocalViewModelStoreOwner provides this
                 ) {

@@ -10,5 +10,8 @@ data class TodoModel(
     @ColumnInfo(name = "Title") val title: String,
     @ColumnInfo(name = "Description") val description: String?,
     @ColumnInfo(name = "IsCompleted") val isCompleted: Boolean = false,
-    @ColumnInfo(name = "AtCreated") val createdAt: Long = System.currentTimeMillis()
+    @ColumnInfo(name = "AtCreated") val createdAt: Long = System.currentTimeMillis(),
+    @ColumnInfo(name = "HasReminder") val hasReminder: Boolean = false,
+    @ColumnInfo(name = "ReminderTime") val reminderTime: Long? = null,
+    @ColumnInfo(name = "IsAddedToCalendar") val isAddedToCalendar: Boolean = false
 )
