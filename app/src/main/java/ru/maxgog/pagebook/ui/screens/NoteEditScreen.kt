@@ -99,7 +99,8 @@ fun NoteEditScreen(
                 )
             )
         },
-        modifier = modifier
+        modifier = modifier,
+        contentWindowInsets = WindowInsets(0)
     ) { padding ->
         Column(
             modifier = Modifier

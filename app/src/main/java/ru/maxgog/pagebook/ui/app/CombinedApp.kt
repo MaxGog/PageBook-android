@@ -1,11 +1,16 @@
 package ru.maxgog.pagebook.ui.app
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -43,34 +48,19 @@ fun CombinedApp(
     )
 
     Scaffold(
+        modifier = Modifier.systemBarsPadding(),
+        contentWindowInsets = WindowInsets(0.dp),
         snackbarHost = { SnackbarHost(snackbarHostState) },
-        bottomBar = { BottomNavBar(navController) }
-    ) { padding ->
-        AppNavHost(
-            navController = navController,
-            paddingValues = padding,
-            notesViewModel = notesViewModel,
-            todoViewModel = todoViewModel,
-            calendarViewModel = calendarViewModel,
-        )
-    }
-}
-@Composable
-private fun AppContent(
-    navController: NavHostController,
-    notesViewModel: NotesViewModel,
-    todoViewModel: TodoViewModel,
-    calendarViewModel: CalendarViewModel
-) {
-    Scaffold(
-        bottomBar = { BottomNavBar(navController) }
-    ) { padding ->
-        AppNavHost(
-            navController = navController,
-            paddingValues = padding,
-            notesViewModel = notesViewModel,
-            todoViewModel = todoViewModel,
-            calendarViewModel = calendarViewModel
-        )
-    }
+        bottomBar = { BottomNavBar(navController) },
+        content = { padding ->
+            AppNavHost(
+                modifier = Modifier.padding(padding),
+                navController = navController,
+                paddingValues = padding,
+                notesViewModel = notesViewModel,
+                todoViewModel = todoViewModel,
+                calendarViewModel = calendarViewModel,
+            )
+        }
+    )
 }

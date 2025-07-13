@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">PageBook</string>
     <string name="new_note">New note</string>
-    <string name="edit_note">Edit note</string>
-    <string name="new_task">Add new task</string>
+    <string name="edit_note">Edit</string>
+    <string name="new_task">New task</string>
     <string name="cancel">Cancel</string>
     <string name="ok">OK</string>
     <string name="add">Add</string>
@@ -14,11 +14,18 @@
     <string name="notes">Notes</string>
     <string name="todo_list">To-Do list</string>
     <string name="save">Save</string>
-    <string name="todo">To do</string>
+    <string name="todo">Task</string>
     <string name="calendar">Calendar</string>
-    <string name="add_event">Create event</string>
     <string name="event_title">Event name</string>
-    <string name="event_description">Description</string>
+    <string name="event_description">Event description</string>
     <string name="event_time">Time (HH:mm)</string>
-    <string name="no_events">Not found events</string>
+    <string name="no_events">No events found</string>
+
+    <string name="add_task">Add task</string>
+    <string name="invalid_task_title">Enter task title</string>
+    <string name="set_reminder">Set reminder</string>
+    <string name="select_date_and_time">Select date and time</string>
+    <string name="add_to_calendar">Add to calendar</string>
+    <string name="no_tasks">No tasks</string>
+    <string name="no_notes">No notes</string>
 </resources>

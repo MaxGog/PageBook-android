@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -15,6 +16,7 @@ import ru.maxgog.pagebook.models.TodoModel
 import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import ru.maxgog.pagebook.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,17 +35,14 @@ fun TodoItem(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerLow
         ),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = 1.dp,
-            pressedElevation = 0.dp
-        )
+        elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Checkbox(
                 checked = todo.isCompleted,
@@ -61,7 +60,11 @@ fun TodoItem(
                 Text(
                     text = todo.title,
                     style = MaterialTheme.typography.titleMedium,
-                    color = MaterialTheme.colorScheme.onSurface,
+                    color = if (todo.isCompleted) {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    } else {
+                        MaterialTheme.colorScheme.onSurface
+                    },
                     textDecoration = if (todo.isCompleted) TextDecoration.LineThrough else TextDecoration.None,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -71,7 +74,11 @@ fun TodoItem(
                     Text(
                         text = it,
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        color = if (todo.isCompleted) {
+                            MaterialTheme.colorScheme.outline
+                        } else {
+                            MaterialTheme.colorScheme.onSurfaceVariant
+                        },
                         textDecoration = if (todo.isCompleted) TextDecoration.LineThrough else TextDecoration.None,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis
@@ -95,28 +102,25 @@ fun TodoItem(
             if (todo.hasReminder && !todo.isAddedToCalendar) {
                 FilledTonalButton(
                     onClick = { onAddToCalendarClick(todo) },
-                    modifier = Modifier.padding(start = 8.dp),
-                    colors = ButtonDefaults.filledTonalButtonColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer
-                    ),
-                    contentPadding = ButtonDefaults.ButtonWithIconContentPadding
+                    modifier = Modifier.wrapContentWidth(),
+                    contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+                    shape = MaterialTheme.shapes.small
                 ) {
                     Text(
-                        text = "Добавить в календарь",
-                        style = MaterialTheme.typography.labelMedium
+                        text = stringResource(R.string.add_to_calendar),
+                        style = MaterialTheme.typography.labelMedium,
+                        maxLines = 1
                     )
                 }
             }
 
             IconButton(
-                onClick = { onDeleteClick(todo) },
-                colors = IconButtonDefaults.iconButtonColors(
-                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                onClick = { onDeleteClick(todo) }
             ) {
                 Icon(
                     imageVector = Icons.Default.Delete,
-                    contentDescription = "Удалить задачу"
+                    contentDescription = stringResource(R.string.delete),
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
         }

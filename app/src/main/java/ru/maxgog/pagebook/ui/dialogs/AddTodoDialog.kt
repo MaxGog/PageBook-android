@@ -11,6 +11,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import ru.maxgog.pagebook.R
+import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -32,12 +33,18 @@ fun AddTodoDialog(
         modifier = modifier,
         title = {
             Text(
-                text = "Добавить задачу",
-                style = MaterialTheme.typography.headlineSmall
+                text = stringResource(R.string.add_task),
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onSurface
             )
         },
         text = {
-            Column(modifier = Modifier.padding(top = 8.dp)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
                 OutlinedTextField(
                     value = title,
                     onValueChange = onTitleChange,
@@ -47,16 +54,23 @@ fun AddTodoDialog(
                     isError = title.isBlank(),
                     supportingText = {
                         if (title.isBlank()) {
-                            Text("Неправильное имя напоминания")
+                            Text(
+                                stringResource(R.string.invalid_task_title),
+                                color = MaterialTheme.colorScheme.error
+                            )
                         }
                     },
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = MaterialTheme.colorScheme.primary,
-                        unfocusedBorderColor = MaterialTheme.colorScheme.outline
-                    )
+                        focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                        errorContainerColor = MaterialTheme.colorScheme.errorContainer,
+                        focusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    ),
+                    shape = MaterialTheme.shapes.medium
                 )
-
-                Spacer(modifier = Modifier.height(16.dp))
 
                 OutlinedTextField(
                     value = description,
@@ -65,48 +79,59 @@ fun AddTodoDialog(
                     modifier = Modifier.fillMaxWidth(),
                     maxLines = 3,
                     colors = OutlinedTextFieldDefaults.colors(
-                        focusedBorderColor = MaterialTheme.colorScheme.primary,
-                        unfocusedBorderColor = MaterialTheme.colorScheme.outline
-                    )
+                        focusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+                        focusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
+                    ),
+                    shape = MaterialTheme.shapes.medium
                 )
-
-                Spacer(modifier = Modifier.height(16.dp))
 
                 FilledTonalButton(
                     onClick = onDateTimeClick,
                     modifier = Modifier.fillMaxWidth(),
+                    shape = MaterialTheme.shapes.medium,
                     colors = ButtonDefaults.filledTonalButtonColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                        contentColor = MaterialTheme.colorScheme.onSurface
                     )
                 ) {
                     Text(
                         text = if (selectedDate != null && selectedTime != null) {
-                            val dateFormat = DateTimeFormatter.ofPattern("dd MMM yyyy")
-                            val timeFormat = DateTimeFormatter.ofPattern("HH:mm")
-                            selectedDate.format(dateFormat)
-                            selectedTime.format(timeFormat)
+                            val dateTime = LocalDateTime.of(selectedDate, selectedTime)
+                            val dateFormat = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm")
+                            dateTime.format(dateFormat)
                         } else {
-                            "Поставить напоминание"
+                            stringResource(R.string.set_reminder)
                         }
                     )
                 }
             }
         },
         confirmButton = {
-            FilledTonalButton(
+            TextButton(
                 onClick = onConfirm,
                 enabled = title.isNotBlank(),
-                colors = ButtonDefaults.filledTonalButtonColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                colors = ButtonDefaults.textButtonColors(
+                    contentColor = MaterialTheme.colorScheme.primary
                 )
             ) {
-                Text(stringResource(R.string.add))
+                Text(stringResource(R.string.add).uppercase())
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.cancel))
+            TextButton(
+                onClick = onDismiss,
+                colors = ButtonDefaults.textButtonColors(
+                    contentColor = MaterialTheme.colorScheme.onSurface
+                )
+            ) {
+                Text(stringResource(R.string.cancel).uppercase())
             }
-        }
+        },
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        tonalElevation = AlertDialogDefaults.TonalElevation
     )
 }

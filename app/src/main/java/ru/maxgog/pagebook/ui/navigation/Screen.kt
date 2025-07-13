@@ -1,6 +1,7 @@
 package ru.maxgog.pagebook.ui.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Note
 import androidx.compose.material.icons.filled.CalendarToday
 import androidx.compose.material.icons.filled.Checklist
 import androidx.compose.material.icons.filled.Note
@@ -13,7 +14,7 @@ sealed class Screen(
     val labelResId: Int
 ) {
     object Todo : Screen("todo", Icons.Default.Checklist, R.string.todo_list)
-    object Notes : Screen("notes", Icons.Default.Note, R.string.notes)
+    object Notes : Screen("notes", Icons.AutoMirrored.Filled.Note, R.string.notes)
     object Calendar : Screen("calendar", Icons.Default.CalendarToday, R.string.calendar)
 
     companion object {

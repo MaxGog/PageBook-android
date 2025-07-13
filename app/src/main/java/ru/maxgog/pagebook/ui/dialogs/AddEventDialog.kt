@@ -38,7 +38,7 @@ fun AddEventDialog(
         modifier = modifier,
         title = {
             Text(
-                text = stringResource(R.string.add_event),
+                text = stringResource(R.string.add),
                 style = MaterialTheme.typography.headlineSmall
             )
         },

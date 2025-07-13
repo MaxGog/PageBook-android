@@ -22,12 +22,47 @@ fun DateTimePickerDialog(
 ) {
     val datePickerState = rememberDatePickerState()
     val timePickerState = rememberTimePickerState()
+    val dialogColors = DatePickerDefaults.colors()
 
-    DatePickerDialog(
+    AlertDialog(
         onDismissRequest = onDismiss,
         modifier = modifier,
+        title = {
+            Text(
+                text = stringResource(R.string.select_date_and_time),
+                style = MaterialTheme.typography.headlineSmall,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        },
+        text = {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                DatePicker(
+                    state = datePickerState,
+                    colors = dialogColors
+                )
+
+                HorizontalDivider(
+                    thickness = 1.dp,
+                    color = MaterialTheme.colorScheme.outlineVariant
+                )
+
+                TimePicker(
+                    state = timePickerState,
+                    colors = TimePickerDefaults.colors(
+                        clockDialColor = MaterialTheme.colorScheme.surfaceContainerHighest,
+                        clockDialSelectedContentColor = MaterialTheme.colorScheme.onPrimary,
+                        clockDialUnselectedContentColor = MaterialTheme.colorScheme.onSurface,
+                        selectorColor = MaterialTheme.colorScheme.primary,
+                        containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
+                    )
+                )
+            }
+        },
         confirmButton = {
-            FilledTonalButton(
+            TextButton(
                 onClick = {
                     datePickerState.selectedDateMillis?.let { millis ->
                         val date = Instant.ofEpochMilli(millis)
@@ -38,27 +73,24 @@ fun DateTimePickerDialog(
                     }
                 },
                 enabled = datePickerState.selectedDateMillis != null,
-                colors = ButtonDefaults.filledTonalButtonColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                colors = ButtonDefaults.textButtonColors(
+                    contentColor = MaterialTheme.colorScheme.primary
                 )
             ) {
-                Text(stringResource(R.string.ok))
+                Text(stringResource(R.string.ok).uppercase())
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
-                Text(stringResource(R.string.cancel))
+            TextButton(
+                onClick = onDismiss,
+                colors = ButtonDefaults.textButtonColors(
+                    contentColor = MaterialTheme.colorScheme.onSurface
+                )
+            ) {
+                Text(stringResource(R.string.cancel).uppercase())
             }
-        }
-    ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 16.dp)
-        ) {
-            DatePicker(state = datePickerState)
-            Spacer(modifier = Modifier.height(16.dp))
-            HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
-            Spacer(modifier = Modifier.height(16.dp))
-            TimePicker(state = timePickerState)
-        }
-    }
+        },
+        containerColor = MaterialTheme.colorScheme.surfaceContainer,
+        tonalElevation = AlertDialogDefaults.TonalElevation
+    )
 }

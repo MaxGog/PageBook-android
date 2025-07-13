@@ -9,23 +9,18 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.core.view.WindowCompat
 import ru.maxgog.pagebook.ui.app.CombinedApp
 import ru.maxgog.pagebook.ui.theme.PageBookTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             PageBookTheme {
-                CompositionLocalProvider(
-                    LocalViewModelStoreOwner provides this
-                ) {
-                    Surface(
-                        modifier = Modifier.fillMaxSize(),
-                        color = MaterialTheme.colorScheme.background
-                    ) {
-                        CombinedApp()
-                    }
+                CompositionLocalProvider(LocalViewModelStoreOwner provides this) {
+                    CombinedApp()
                 }
             }
         }

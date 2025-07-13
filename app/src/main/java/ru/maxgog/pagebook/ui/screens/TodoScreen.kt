@@ -3,10 +3,12 @@ package ru.maxgog.pagebook.ui.screens
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -25,9 +27,11 @@ import java.time.LocalTime
 import java.time.ZoneId
 import ru.maxgog.pagebook.R
 import ru.maxgog.pagebook.models.TodoModel
+import ru.maxgog.pagebook.ui.EmptyState
 import ru.maxgog.pagebook.ui.dialogs.AddTodoDialog
 import ru.maxgog.pagebook.ui.dialogs.DateTimePickerDialog
 import ru.maxgog.pagebook.ui.items.TodoItem
+import ru.maxgog.pagebook.ui.theme.AppTheme
 import ru.maxgog.pagebook.ui.theme.TodoListAppTheme
 import ru.maxgog.pagebook.viewmodels.TodoViewModel
 
@@ -49,13 +53,8 @@ fun TodoScreen(
         modifier = modifier,
         topBar = {
             CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(R.string.todo_list),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                },
+                modifier = Modifier.statusBarsPadding(),
+                title = { Text(stringResource(R.string.todo_list)) },
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer,
                     titleContentColor = MaterialTheme.colorScheme.onSurface
@@ -70,36 +69,27 @@ fun TodoScreen(
             ) {
                 Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add))
                 Spacer(Modifier.width(8.dp))
-                Text("Добавить заметку")
+                Text(stringResource(R.string.add_task))
             }
-        }
+        },
     ) { padding ->
         if (todos.isEmpty()) {
             EmptyState(
-                modifier = Modifier
-                    .padding(padding)
-                    .fillMaxWidth()
+                text = stringResource(R.string.no_tasks),
+                modifier = Modifier.padding(padding)
             )
         } else {
             LazyColumn(
                 modifier = Modifier.padding(padding),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(AppTheme.itemSpacing)
             ) {
-                items(
-                    items = todos,
-                    key = { it.id }
-                ) { todo ->
+                items(todos, key = { it.id }) { todo ->
                     TodoItem(
                         todo = todo,
-                        onTodoClick = { updatedTodo ->
-                            viewModel.update(updatedTodo)
-                        },
-                        onDeleteClick = { todoToDelete ->
-                            viewModel.delete(todoToDelete)
-                        },
-                        onAddToCalendarClick = { todo ->
-                            viewModel.addToCalendar(todo)
-                        }
+                        onTodoClick = { viewModel.update(it) },
+                        onDeleteClick = { viewModel.delete(it) },
+                        onAddToCalendarClick = { viewModel.addToCalendar(it) },
+                        modifier = Modifier.padding(horizontal = AppTheme.horizontalPadding)
                     )
                 }
             }
@@ -118,12 +108,10 @@ fun TodoScreen(
             onDismiss = { showDialog = false },
             onConfirm = {
                 if (newTodoTitle.isNotBlank()) {
-                    val reminderTime = if (selectedDate != null && selectedTime != null) {
-                        selectedDate!!.atTime(selectedTime!!)
-                            .atZone(ZoneId.systemDefault())
-                            .toInstant()
-                            .toEpochMilli()
-                    } else null
+                    val reminderTime = selectedDate?.atTime(selectedTime ?: LocalTime.NOON)
+                        ?.atZone(ZoneId.systemDefault())
+                        ?.toInstant()
+                        ?.toEpochMilli()
 
                     viewModel.insert(
                         TodoModel(
@@ -152,44 +140,5 @@ fun TodoScreen(
                 showDateTimePicker = false
             }
         )
-    }
-}
-
-@Composable
-private fun EmptyState(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier.padding(32.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = "Нет задач",
-            style = MaterialTheme.typography.titleMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-        Spacer(Modifier.height(8.dp))
-        Text(
-            text = "Добавить первую задачу",
-            style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun TodoPreview() {
-    TodoListAppTheme {
-        Surface(modifier = Modifier.fillMaxSize()) {
-            TodoItem(
-                todo = TodoModel(
-                    title = stringResource(R.string.title),
-                    description = stringResource(R.string.description)
-                ),
-                onTodoClick = {},
-                onDeleteClick = {},
-                onAddToCalendarClick = {}
-            )
-        }
     }
 }
