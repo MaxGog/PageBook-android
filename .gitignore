@@ -87,3 +87,5 @@ Desktop.ini
 # Build cache
 **/.cxx/
 **/build-cache/
+
+*.jks

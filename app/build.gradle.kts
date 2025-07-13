@@ -11,7 +11,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "ru.maxgog.pagebook"
+        applicationId = "ru.maxgog.pageru"
         minSdk = 28
         targetSdk = 36
         versionCode = 5
@@ -41,6 +41,27 @@ android {
 
     buildFeatures {
         compose = true
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file("keystore.jks")
+            storePassword = "2404Bhbyf1975"
+            keyAlias = "upload"
+            keyPassword = "2404Bhbyf1975"
+        }
+    }
+
+    buildTypes {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
+            isShrinkResources = true
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
     }
 
     buildToolsVersion = "36.0.0"
