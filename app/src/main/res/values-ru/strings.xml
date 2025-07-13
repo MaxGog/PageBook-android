@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">PageBook</string>
+    <string name="new_note">Новая заметка</string>
+    <string name="edit_note">Редиктировать</string>
+    <string name="new_task">Новая задача</string>
+    <string name="cancel">Отмена</string>
+    <string name="ok">OK</string>
+    <string name="add">Добавить</string>
+    <string name="delete">Удалить</string>
+    <string name="back">Назад</string>
+    <string name="content">Содержание</string>
+    <string name="title">Название</string>
+    <string name="description">Описание</string>
+    <string name="notes">Заметки</string>
+    <string name="todo_list">To-Do лист</string>
+    <string name="save">Сохранить</string>
+    <string name="todo">Задача</string>
+    <string name="calendar">Календарь</string>
+    <string name="event_title">Имя события</string>
+    <string name="event_description">Описание события</string>
+    <string name="event_time">Time (HH:mm)</string>
+    <string name="no_events">События не найдены</string>
+
+    <string name="add_task">Добавить задачу</string>
+    <string name="invalid_task_title">Введите название задачи</string>
+    <string name="set_reminder">Установить напоминание</string>
+    <string name="select_date_and_time">Выберите дату и время</string>
+    <string name="add_to_calendar">Добавить в календарь</string>
+    <string name="no_tasks">Нет задач</string>
+    <string name="no_notes">Нет заметок</string>
+</resources>
