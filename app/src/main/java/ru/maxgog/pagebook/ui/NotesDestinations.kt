@@ -5,4 +5,5 @@ object NotesDestinations {
     const val LIST_ROUTE = "list"
     const val ADD_ROUTE = "add"
     const val DETAIL_ROUTE = "detail"
+    const val SETTINGS_ROUTE = "settings"
 }

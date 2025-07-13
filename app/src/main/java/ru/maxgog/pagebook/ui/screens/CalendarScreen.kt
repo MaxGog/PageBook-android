@@ -31,6 +31,7 @@ import ru.maxgog.pagebook.ui.EmptyState
 import ru.maxgog.pagebook.ui.dialogs.AddEventDialog
 import ru.maxgog.pagebook.ui.items.EventItem
 import ru.maxgog.pagebook.ui.theme.AppTheme
+import ru.maxgog.pagebook.ui.theme.SetTransparentSystemBars
 import ru.maxgog.pagebook.viewmodels.CalendarViewModel
 import java.time.YearMonth
 import java.time.format.TextStyle
@@ -60,6 +61,8 @@ fun CalendarScreen(
     LaunchedEffect(selectedDate) {
         state.animateScrollToMonth(YearMonth.of(selectedDate.year, selectedDate.month))
     }
+
+    SetTransparentSystemBars()
 
     Scaffold(
         modifier = modifier,

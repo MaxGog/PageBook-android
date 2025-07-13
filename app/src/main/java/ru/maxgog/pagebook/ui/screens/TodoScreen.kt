@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -28,10 +29,12 @@ import java.time.ZoneId
 import ru.maxgog.pagebook.R
 import ru.maxgog.pagebook.models.TodoModel
 import ru.maxgog.pagebook.ui.EmptyState
+import ru.maxgog.pagebook.ui.NotesDestinations
 import ru.maxgog.pagebook.ui.dialogs.AddTodoDialog
 import ru.maxgog.pagebook.ui.dialogs.DateTimePickerDialog
 import ru.maxgog.pagebook.ui.items.TodoItem
 import ru.maxgog.pagebook.ui.theme.AppTheme
+import ru.maxgog.pagebook.ui.theme.SetTransparentSystemBars
 import ru.maxgog.pagebook.ui.theme.TodoListAppTheme
 import ru.maxgog.pagebook.viewmodels.TodoViewModel
 
@@ -49,6 +52,7 @@ fun TodoScreen(
     var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
     var selectedTime by remember { mutableStateOf<LocalTime?>(null) }
 
+    SetTransparentSystemBars()
     Scaffold(
         modifier = modifier,
         topBar = {
@@ -58,7 +62,7 @@ fun TodoScreen(
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer,
                     titleContentColor = MaterialTheme.colorScheme.onSurface
-                )
+                ),
             )
         },
         floatingActionButton = {

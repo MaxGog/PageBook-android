@@ -26,7 +26,7 @@ fun DateTimePickerDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        modifier = modifier,
+        modifier = modifier.widthIn(min = 560.dp, max = 800.dp),
         title = {
             Text(
                 text = stringResource(R.string.select_date_and_time),

@@ -101,6 +101,7 @@ dependencies {
 
     // Other UI
     implementation(libs.composecalendar)
+    implementation(libs.accompanist.systemuicontroller)
 
     // Testing
     testImplementation(libs.junit)

@@ -28,4 +28,13 @@
     <string name="add_to_calendar">Add to calendar</string>
     <string name="no_tasks">No tasks</string>
     <string name="no_notes">No notes</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="theme_title">Theme</string>
+    <string name="theme_system">System</string>
+    <string name="theme_light">Light</string>
+    <string name="theme_dark">Night</string>
+    <string name="language_title">Language</string>
+    <string name="app_description_title">About app</string>
+    <string name="app_description">PageBook is a convenient app for storing and organizing pages with notes, bookmarks, and other materials. Developed with love in Kotlin.</string>
 </resources>

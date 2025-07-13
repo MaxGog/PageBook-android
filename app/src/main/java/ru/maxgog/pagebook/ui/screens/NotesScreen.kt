@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,6 +27,7 @@ import ru.maxgog.pagebook.ui.EmptyState
 import ru.maxgog.pagebook.ui.NotesDestinations
 import ru.maxgog.pagebook.ui.items.NoteItem
 import ru.maxgog.pagebook.ui.theme.AppTheme
+import ru.maxgog.pagebook.ui.theme.SetTransparentSystemBars
 import ru.maxgog.pagebook.viewmodels.NotesViewModel
 
 @Composable
@@ -45,6 +47,7 @@ fun NotesScreen(
                 notes = notes,
                 onNoteClick = { id -> navController.navigate("${NotesDestinations.DETAIL_ROUTE}/$id") },
                 onAddNote = { navController.navigate(NotesDestinations.ADD_ROUTE) },
+                onSettingsClick = { navController.navigate(NotesDestinations.SETTINGS_ROUTE) }
             )
         }
 
@@ -65,6 +68,10 @@ fun NotesScreen(
                 onBack = { navController.popBackStack() }
             )
         }
+
+        composable(NotesDestinations.SETTINGS_ROUTE) {
+            SettingsScreen(navController)
+        }
     }
 }
 
@@ -74,8 +81,10 @@ fun NoteListScreen(
     notes: List<NoteModel>,
     onNoteClick: (Int) -> Unit,
     onAddNote: () -> Unit,
+    onSettingsClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    SetTransparentSystemBars()
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -84,7 +93,15 @@ fun NoteListScreen(
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.surfaceContainer,
                     titleContentColor = MaterialTheme.colorScheme.onSurface
-                )
+                ),
+                actions = {
+                    IconButton(onClick = onSettingsClick) {
+                        Icon(
+                            imageVector = Icons.Default.Settings,
+                            contentDescription = stringResource(R.string.settings_title)
+                        )
+                    }
+                }
             )
         },
         floatingActionButton = {
