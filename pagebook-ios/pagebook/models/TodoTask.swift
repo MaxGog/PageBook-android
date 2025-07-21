@@ -4,6 +4,7 @@
 //
 //  Created by Максим Гоглов on 13.07.2025.
 //
+import Foundation
 import SwiftUI
 
 struct TodoTask: Identifiable, Codable {
@@ -27,8 +28,16 @@ struct TodoTask: Identifiable, Codable {
         var color: Color {
             switch self {
             case .low: return .green
-            case .medium: return .yellow
+            case .medium: return .orange
             case .high: return .red
+            }
+        }
+        
+        var iconName: String {
+            switch self {
+            case .low: return "arrow.down"
+            case .medium: return "equal"
+            case .high: return "exclamationmark"
             }
         }
     }
