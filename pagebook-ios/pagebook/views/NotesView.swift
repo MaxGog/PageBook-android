@@ -10,24 +10,19 @@ import SwiftData
 
 struct NotesView: View {
     @StateObject private var store = NotesStore()
-    @State private var showingAddNote = false
-    @State private var newNoteTitle = ""
-    @State private var newNoteContent = ""
+    @State private var showingNewNote = false
+    @State private var newNote = Note(id: UUID(), title: "", content: "", createdAt: Date())
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(store.notes) { note in
+                ForEach($store.notes) { $note in
                     NavigationLink {
-                        NoteDetailView(note: note)
+                        NoteDetailView(note: $note, onSave: {
+                            store.saveNotes()
+                        })
                     } label: {
-                        VStack(alignment: .leading) {
-                            Text(note.title)
-                                .font(.headline)
-                            Text(note.content.prefix(50))
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                        }
+                        NoteRowView(note: note)
                     }
                 }
                 .onDelete(perform: deleteNote)
@@ -35,54 +30,49 @@ struct NotesView: View {
             .navigationTitle("Мои заметки")
             .toolbar {
                 ToolbarItem {
-                    Button(action: { showingAddNote = true }) {
+                    Button(action: {
+                        newNote = Note(id: UUID(), title: "", content: "", createdAt: Date())
+                        showingNewNote = true
+                    }) {
                         Label("Добавить", systemImage: "plus")
                     }
                 }
             }
-        }
-        .sheet(isPresented: $showingAddNote) {
-            NavigationView {
-                Form {
-                    TextField("Заголовок", text: $newNoteTitle)
-                    TextEditor(text: $newNoteContent)
-                        .frame(minHeight: 200)
-                }
-                .navigationTitle("Новая заметка")
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Отмена") {
-                            showingAddNote = false
-                            newNoteTitle = ""
-                            newNoteContent = ""
-                        }
-                    }
-                    ToolbarItem(placement: .confirmationAction) {
-                        Button("Сохранить") {
-                            let note = Note(
-                                id: UUID(),
-                                title: newNoteTitle,
-                                content: newNoteContent,
-                                createdAt: Date()
-                            )
-                            store.notes.append(note)
+            .sheet(isPresented: $showingNewNote) {
+                NoteDetailView(
+                    note: $newNote,
+                    onSave: {
+                        if !newNote.title.isEmpty {
+                            store.notes.append(newNote)
                             store.saveNotes()
-                            showingAddNote = false
-                            newNoteTitle = ""
-                            newNoteContent = ""
                         }
-                        .disabled(newNoteTitle.isEmpty)
-                    }
-                }
+                        showingNewNote = false
+                    },
+                    isNewNote: true
+                )
             }
-            #if os(macOS)
-            .frame(minWidth: 400, minHeight: 500)
-            #endif
         }
     }
     
     func deleteNote(at offsets: IndexSet) {
         store.notes.remove(atOffsets: offsets)
         store.saveNotes()
+    }
+}
+
+struct NoteRowView: View {
+    var note: Note
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(note.title)
+                .font(.headline)
+            
+            if let preview = note.content.prefix(100).split(separator: "\n").first {
+                Text(preview)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+        }
     }
 }
